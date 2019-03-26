@@ -27,30 +27,30 @@ test('instant.toString()', ({ equal, end })=>{
   end();
 });
 
-test('Instant.fromSeconds()', ({ equal, throws, end })=>{
-  const instant = Instant.fromSeconds(Math.floor(Date.UTC(1976, 10, 18, 15, 23, 30, 100) / 1000));
+test('Instant.fromEpochSeconds()', ({ equal, throws, end })=>{
+  const instant = Instant.fromEpochSeconds(Math.floor(Date.UTC(1976, 10, 18, 15, 23, 30, 100) / 1000));
   equal(instant.toString(), '1976-11-18T15:23:30.000000000Z');
-  throws(() => Instant.fromSeconds(0n));
+  throws(() => Instant.fromEpochSeconds(0n));
   end();
 });
 
-test('Instant.fromMilliseconds()', ({ equal, throws, end }) => {
-  const instant = Instant.fromMilliseconds(Date.UTC(1976, 10, 18, 15, 23, 30, 123));
+test('Instant.fromEpochMilliseconds()', ({ equal, throws, end }) => {
+  const instant = Instant.fromEpochMilliseconds(Date.UTC(1976, 10, 18, 15, 23, 30, 123));
   equal(instant.toString(), '1976-11-18T15:23:30.123000000Z');
-  throws(() => Instant.fromMilliseconds(0n));
+  throws(() => Instant.fromEpochMilliseconds(0n));
   end();
 });
 
 test('Instant.fromMicroseconds()', ({ equal, throws, end }) => {
-  const instant = Instant.fromMicroseconds(BigInt(Date.UTC(1976, 10, 18, 15, 23, 30, 123) * 1000 + 456));
+  const instant = Instant.fromEpochMicroseconds(BigInt(Date.UTC(1976, 10, 18, 15, 23, 30, 123) * 1000 + 456));
   equal(instant.toString(), '1976-11-18T15:23:30.123456000Z');
-  throws(() => Instant.fromMicroseconds(0));
+  throws(() => Instant.fromEpochMicroseconds(0));
   end();
 });
 
 test('Instant.fromNanoseconds()', ({ equal, throws, end }) => {
-  const instant = Instant.fromNanoseconds(BigInt(Date.UTC(1976, 10, 18, 15, 23, 30, 123) * 1000 + 456) * 1000n + 789n);
+  const instant = Instant.fromEpochNanoseconds(BigInt(Date.UTC(1976, 10, 18, 15, 23, 30, 123) * 1000 + 456) * 1000n + 789n);
   equal(instant.toString(), '1976-11-18T15:23:30.123456789Z');
-  throws(() => Instant.fromNanoseconds(0));
+  throws(() => Instant.fromEpochNanoseconds(0));
   end();
 });

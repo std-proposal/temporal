@@ -25,7 +25,7 @@
 
       let interval;
       window.update = (string) => {
-        updateAll(Instant.parse(string))
+        updateAll(Instant.fromString(string))
       };
       window.checkInterval = (on) => {
         try {

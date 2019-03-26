@@ -16,38 +16,38 @@ represents the *nanoseconds since the unix-epoch* of the instant.
 Parses a `string` that must be in the same ISO-8601 format as produced by `instant.toString()`
 and creates a new `Instant` object from it.
 
-## `Instant.fromSeconds(seconds: number) : Instant`
+## `Instant.fromEpochSeconds(seconds: number) : Instant`
 
 Equivalent to `Instant.fromMilliseconds(seconds * 1000)`.
 
-## `Instant.fromMilliseconds(milliseconds : number) : Instant`
+## `Instant.fromEpochMilliseconds(milliseconds : number) : Instant`
 
 Equivalent to `Instant.fromMicroseconds(BigInt(milliseconds) * 1000n)`.
 
-## `Instant.fromMicroseconds(micros: BigInt) : Instant`
+## `Instant.fromEpochMicroseconds(micros: BigInt) : Instant`
 
 Equivalent to `Instant.fromNanoseconds(BigInt(micros) * 1000n)`.
 
-## `Instant.fromNanoseconds(nanos: BigInt) : Instant`
+## `Instant.fromEpochNanoseconds(nanos: BigInt) : Instant`
 
 Equivalent to `new Instant(nanos)`.
 
-## `instant.seconds : number`
+## `instant.epochSeconds : number`
 
 The `seconds` property of an `Instant` object is readonly and represents the *seconds
 since unix-epoch*.
 
-## `instant.milliseconds: number`
+## `instant.epochMilliseconds: number`
 
 The `milliseconds` property of an `Instant` object is readonly and represents the *milliseconds
 since unix-epoch*.
 
-## `instant.microseconds: BigInt`
+## `instant.epochMicroseconds: BigInt`
 
 The `microseconds` property of an `Instant` object is readonly and represents the *microseconds
 since unix-epoch*.
 
-## `instant.nanoseconds: BigInt`
+## `instant.epochNanoseconds: BigInt`
 
 The `nanoseconds` property of an `Instant` object is readonly and represents the *nanoseconds
 since unix-epoch*.

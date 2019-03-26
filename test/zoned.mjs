@@ -11,7 +11,7 @@ import { Instant } from '../lib/instant.mjs';
 import { Zoned } from '../lib/zoned.mjs';
 
 test('new Zoned()', ({ equal, end }) => {
-  const instant = Instant.fromMilliseconds(Date.UTC(1976, 10, 18, 14, 23, 30, 123));
+  const instant = Instant.fromEpochMilliseconds(Date.UTC(1976, 10, 18, 14, 23, 30, 123));
   const zoned = new Zoned(instant, 'Europe/Vienna');
   equal(zoned.offsetSeconds, 3600);
   equal((new Zoned(instant, 'Europe/Vienna')).toString(), '1976-11-18T15:23:30.123000000+01:00[Europe/Vienna]');

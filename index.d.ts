@@ -11,10 +11,10 @@ export class Instant {
   toJSON() : string;
 
   static fromString(isostring: string) : Instant;
-  static fromSeconds(seconds: number) : Instant;
-  static fromMilliseconds(milliseconds : number) : Instant;
-  static fromMicroseconds(micros: BigInt) : Instant;
-  static fromNanoseconds(nanos: BigInt) : Instant;
+  static fromEpochSeconds(seconds: number) : Instant;
+  static fromEpochMilliseconds(milliseconds : number) : Instant;
+  static fromEpochMicroseconds(micros: BigInt) : Instant;
+  static fromEpochNanoseconds(nanos: BigInt) : Instant;
 }
 export class ZonedDateTime {
   constructor(instant : Instant, timeZone: string);
@@ -29,10 +29,10 @@ export class ZonedDateTime {
   toJSON(): string;
 
   static fromString(isostring: string) : ZonedDateTime;
-  static fromSeconds(seconds : number, zone : string) : ZonedDateTime;
-  static fromMilliseconds(milliseconds : number, zone : string) : ZonedDateTime;
-  static fromMicroseconds(micros : BigInt, zone : string) : ZonedDateTime;
-  static fromNanoseconds(nanos : BigInt, zone : string) : ZonedDateTime;
+  static fromEpochSeconds(seconds : number, zone : string) : ZonedDateTime;
+  static fromEpochMilliseconds(milliseconds : number, zone : string) : ZonedDateTime;
+  static fromEpochMicroseconds(micros : BigInt, zone : string) : ZonedDateTime;
+  static fromEpochNanoseconds(nanos : BigInt, zone : string) : ZonedDateTime;
 }
 
 export interface CivilDateValues {
