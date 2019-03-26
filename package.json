@@ -1,6 +1,6 @@
 {
   "name": "@std-proposal/temporal",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "TC39 Proposal: Temporal",
   "main": "index.js",
   "directories": {},
