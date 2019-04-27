@@ -60,6 +60,34 @@ test('datetime properties', ({ equal, end }) => {
   instance = instance.with({ year: 2016, month: 1, day: 2 });
   equal(instance.weekOfYear, 53);
 
+  instance = instance.plus({ years: -5, months: -2, days: -10 });
+  equal(instance.year, 2010);
+  equal(instance.month, 10);
+  equal(instance.day, 23);
+  equal(instance.hour, 15);
+  equal(instance.minute, 23);
+  equal(instance.second, 30);
+  equal(instance.millisecond, 123);
+  equal(instance.microsecond, 456);
+  equal(instance.nanosecond, 789);
+  equal(instance.dayOfWeek, 6);
+  equal(instance.dayOfYear, 296);
+  equal(instance.weekOfYear, 42);
+
+  instance = instance.plus({ hours: -23, minutes: -50, seconds: -99, milliseconds: -500, microseconds: -2300, nanoseconds: -1000 });
+  equal(instance.year, 2010);
+  equal(instance.month, 10);
+  equal(instance.day, 22);
+  equal(instance.hour, 15);
+  equal(instance.minute, 31);
+  equal(instance.second, 50);
+  equal(instance.millisecond, 621);
+  equal(instance.microsecond, 155);
+  equal(instance.nanosecond, 789);
+  equal(instance.dayOfWeek, 5);
+  equal(instance.dayOfYear, 295);
+  equal(instance.weekOfYear, 42);
+
   end();
 });
 
