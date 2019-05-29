@@ -1,10 +1,10 @@
 export class Instant {
-  constructor(nanos_since_epoch : BigInt);
+  constructor(nanos_since_epoch : bigint);
 
   readonly seconds: number;
   readonly milliseconds: number;
-  readonly microseconds: BigInt;
-  readonly nanoseconds: BigInt;
+  readonly microseconds: bigint;
+  readonly nanoseconds: bigint;
 
   withZone(timeZone : string) : ZonedDateTime;
   toString() : string;
@@ -13,8 +13,8 @@ export class Instant {
   static fromString(isostring: string) : Instant;
   static fromEpochSeconds(seconds: number) : Instant;
   static fromEpochMilliseconds(milliseconds : number) : Instant;
-  static fromEpochMicroseconds(micros: BigInt) : Instant;
-  static fromEpochNanoseconds(nanos: BigInt) : Instant;
+  static fromEpochMicroseconds(micros: bigint) : Instant;
+  static fromEpochNanoseconds(nanos: bigint) : Instant;
 }
 export class ZonedDateTime {
   constructor(instant : Instant, timeZone: string);
@@ -31,8 +31,8 @@ export class ZonedDateTime {
   static fromString(isostring: string) : ZonedDateTime;
   static fromEpochSeconds(seconds : number, zone : string) : ZonedDateTime;
   static fromEpochMilliseconds(milliseconds : number, zone : string) : ZonedDateTime;
-  static fromEpochMicroseconds(micros : BigInt, zone : string) : ZonedDateTime;
-  static fromEpochNanoseconds(nanos : BigInt, zone : string) : ZonedDateTime;
+  static fromEpochMicroseconds(micros : bigint, zone : string) : ZonedDateTime;
+  static fromEpochNanoseconds(nanos : bigint, zone : string) : ZonedDateTime;
 }
 
 export interface CivilDateValues {
@@ -52,7 +52,7 @@ export interface CivilDateTimeValues extends CivilTimeValues, CivilDateValues {
 }
 
 export class CivilDateTime {
-  constructor(years : number, months : number, days : number, hours : number, minutes : number, seconds : number = 0, nanoseconds : number = 0);
+  constructor(years : number, months : number, days : number, hours : number, minutes : number, seconds? : number /* = 0 */, nanoseconds? : number /* = 0 */);
 
   readonly year : number;
   readonly month : number;
