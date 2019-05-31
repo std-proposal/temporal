@@ -1,46 +1,22 @@
-export class Instant {
-  constructor(nanos_since_epoch : BigInt);
-
-  readonly seconds: number;
-  readonly milliseconds: number;
-  readonly microseconds: BigInt;
-  readonly nanoseconds: BigInt;
-
-  withZone(timeZone : string) : ZonedDateTime;
-  toString() : string;
-  toJSON() : string;
-
-  static fromString(isostring: string) : Instant;
-  static fromEpochSeconds(seconds: number) : Instant;
-  static fromEpochMilliseconds(milliseconds : number) : Instant;
-  static fromEpochMicroseconds(micros: BigInt) : Instant;
-  static fromEpochNanoseconds(nanos: BigInt) : Instant;
+export interface DateLike {
+  year?: number;
+  month?: number;
+  day?: number;
 }
-export class ZonedDateTime {
-  constructor(instant : Instant, timeZone: string);
-
-  readonly instant: Instant;
-  readonly offsetSeconds : number;
-  readonly offsetString: string;
-  readonly ianaZone: string | undefined;
-  readonly timeZone: string;
-
-  toString(): string;
-  toJSON(): string;
-
-  static fromString(isostring: string) : ZonedDateTime;
-  static fromEpochSeconds(seconds : number, zone : string) : ZonedDateTime;
-  static fromEpochMilliseconds(milliseconds : number, zone : string) : ZonedDateTime;
-  static fromEpochMicroseconds(micros : BigInt, zone : string) : ZonedDateTime;
-  static fromEpochNanoseconds(nanos : BigInt, zone : string) : ZonedDateTime;
+export interface TimeLike {
+  hour?: number;
+  minute?: number;
+  second?: number;
+  millisecond?: number;
+  microsecond?: number;
+  nanosecond?: number;
 }
-
-export interface CivilDateValues {
+export interface DateTimeLike extends DateLike, TimeLike {
+}
+export interface DurationLike {
   years?: number;
   months?: number;
   days?: number;
-}
-export interface CivilTimeValues {
   hours?: number;
   minutes?: number;
   seconds?: number;
@@ -48,80 +24,204 @@ export interface CivilTimeValues {
   microseconds?: number;
   nanoseconds?: number;
 }
-export interface CivilDateTimeValues extends CivilTimeValues, CivilDateValues {
+
+export class Instant {
+  constructor(epochNanoseconds: bigint);
+  readonly epochSeconds: number;
+  readonly epochMilliseconds: number;
+  readonly epochMicroseconds: number;
+  readonly epochNanoseconds: number;
+  withZone(ianaZone: string) : ZonedDateTime;
+  withOffset(offset: string) : OffsetDateTime;
+  toString() : string;
+  toJSON() : string;
+  static fromEpochNanoseconds(epochNanos : bigint) : Instant;
+  static fromEpochMicroseconds(epochMicros : bigint) : Instant;
+  static fromEpochMilliseconds(epochMillis: number) : Instant;
+  static fromEpochSeconds(epochSeconds: number) : Instant;
+  static fromString(isoString: string) : Instant;
 }
+export class OffsetDateTime implements DateTimeLike {
+  constructor(instant: Instant, offset : string);
+  readonly year: number;
+  readonly month: number;
+  readonly day: number;
+  readonly hour: number;
+  readonly minute: number;
+  readonly second: number;
+  readonly millisecond: number;
+  readonly microsecond: number;
+  readonly nanosecond: number;
+  readonly dayOfWeek: number;
+  readonly dayOfYear: number;
+  readonly weekOfYear: number;
+  readonly offset: string;
+  with(values : DateTimeLike) : OffsetDateTime;
+  plus(values : DurationLike) : OffsetDateTime;
+  minus(values : DurationLike) : OffsetDateTime;
 
-export class CivilDateTime {
-  constructor(years : number, months : number, days : number, hours : number, minutes : number, seconds : number = 0, nanoseconds : number = 0);
+  withZone(ianaZone: string) : ZonedDateTime;
 
+  getCivilDateTime() : CivilDateTime;
+  getCivilDate() : CivilDate;
+  getCivilTime() : CivilTime;
+  getCivilYearMonth() : CivilYearMonth;
+  getCivilMonthDay() : CivilMonthDay;
+
+  toString() : string;
+  toJSON() : string;
+  static fromString(isoString: string) : OffsetDateTime;
+}
+export class ZonedDateTime implements DateTimeLike {
+  constructor(instant: Instant, ianaZone : string);
+  readonly year: number;
+  readonly month: number;
+  readonly day: number;
+  readonly hour: number;
+  readonly minute: number;
+  readonly second: number;
+  readonly millisecond: number;
+  readonly microsecond: number;
+  readonly nanosecond: number;
+  readonly dayOfWeek: number;
+  readonly dayOfYear: number;
+  readonly weekOfYear: number;
+  readonly offset: string;
+  readonly timeZone: string;
+  with(values : DateTimeLike) : ZonedDateTime;
+  
+  getOffsetDateTime() : OffsetDateTime;
+  getCivilDateTime() : CivilDateTime;
+  getCivilDate() : CivilDate;
+  getCivilTime() : CivilTime;
+  getCivilYearMonth() : CivilYearMonth;
+  getCivilMonthDay() : CivilMonthDay;
+
+  toString() : string;
+  toJSON() : string;
+
+  static fromString(isoString: string) : ZonedDateTime;
+  static isValidTimezone(timeZone : string) : boolean;
+
+  static EARLIER: symbol;
+  static LATER: symbol;
+}
+export class CivilDateTime implements DateTimeLike {
+  constructor(year: number, month: number, day:number, hour: number, minute: number, second?: number, millisecond?: number, microsecond?: number, nanosecond?: number);
+  readonly year: number;
+  readonly month: number;
+  readonly day: number;
+  readonly hour: number;
+  readonly minute: number;
+  readonly second: number;
+  readonly millisecond: number;
+  readonly microsecond: number;
+  readonly nanosecond: number;
+  readonly dayOfWeek: number;
+  readonly dayOfYear: number;
+  readonly weekOfYear: number;
+
+  with(values : DateTimeLike) : CivilDateTime;
+  plus(values : DurationLike) : CivilDateTime;
+  minus(values : DurationLike) : CivilDateTime;
+  difference(other : DateTimeLike) : Duration;
+
+  withZone(ianaZone : string, filter?: string | ZonedDateTime.EARLIER | ZonedDateTime.LATER) : ZonedDateTime;
+  withOffset(offset : string) : OffsetDateTime 
+  
+  getCivilDate() : CivilDate;
+  getCivilTime() : CivilTime;
+  getCivilYearMonth() : CivilYearMonth;
+  getCivilMonthDay() : CivilMonthDay;
+
+  toString() : string;
+  toJSON() : string;
+
+  static fromString(isoString: string) : CivilDateTime;
+}
+export class CivilDate implements DateLike {
+  constructor(year: number, month: number, day:number);
+  readonly year: number;
+  readonly month: number;
+  readonly day: number;
+  readonly dayOfWeek: number;
+  readonly dayOfYear: number;
+  readonly weekOfYear: number;
+
+  with(values : DateLike) : CivilDate;
+  plus(values : DurationLike) : CivilDate;
+  minus(values : DurationLike) : CivilDate;
+  difference(other : DateLike) : Duration;
+
+  withTime(time: TimeLike) : CivilDateTime;
+  
+  getCivilYearMonth() : CivilYearMonth;
+  getCivilMonthDay() : CivilMonthDay;
+
+  toString() : string;
+  toJSON() : string;
+
+  static fromString(isoString: string) : CivilDate;
+}
+export class CivilTime implements TimeLike {
+  constructor(hour: number, minute: number, second?: number, millisecond?: number, microsecond?: number, nanosecond?: number);
+  readonly hour: number;
+  readonly minute: number;
+  readonly second: number;
+  readonly millisecond: number;
+  readonly microsecond: number;
+  readonly nanosecond: number;
+
+  with(values : TimeLike) : CivilTime;
+  plus(values : DurationLike) : CivilTime;
+  minus(values : DurationLike) : CivilTime;
+  difference(other : TimeLike) : Duration;
+  
+  withDate(date : DateLike) : CivilDateTime;
+
+  toString() : string;
+  toJSON() : string;
+
+  static fromString(isoString: string) : CivilTime;
+}
+export class CivilYearMonth implements DateLike {
+  constructor(year : number, month : number);
   readonly year : number;
   readonly month : number;
-  readonly day : number;
-  readonly hour : number;
-  readonly minute : number;
-  readonly second : number;
-  readonly millisecond : number;
-  readonly microsecond : number;
-  readonly nanosecond : number;
-  readonly dayOfWeek : number;
-  readonly dayOfYear : number;
-  readonly weekOfYear : number;
 
-  plus(data: CivilDateTimeValues) : CivilDateTime;
-  with(values: CivilDateTimeValues) : CivilDateTime;
-  withZone(zone : string) : ZonedDateTime;
-  toString() : string;
-  toJSON() : string;
-  toDateTimeString() : string;
-  toWeekDateTimeString() : string;
-  toOrdinalDateTimeString() : string;
+  with(date : DateLike) : CivilYearMonth;
+  plus(duration : DurationLike) : CivilYearMonth;
+  minus(duration : DurationLike) : CivilYearMonth;
+  difference(other : DurationLike) : Duration;
 
-  static fromDateTimeString(isostring : string): string;
-  static fromWeekDateTimeString(isostring : string): string;
-  static fromOrdinalDateTimeString(isostring : string): string;
-  static fromString(isostring: string): CivilDateTime;
-  static fromZonedDateTime(instant: ZonedDateTime): CivilDateTime;
+  withDay(day : number) : CivilDate;
+  toString() : String;
+  toJSON() : String;
+  fromString(iso : string) : CivilMonthDay
 }
-export class CivilDate {
-  constructor(years : number, months: number, days : number);
-
-  readonly year : number;
+export class CivilMonthDay implements DateLike {
+  constructor(month : number, day : number);
   readonly month : number;
   readonly day : number;
-  readonly dayOfWeek : number;
-  readonly dayOfYear : number;
-  readonly weekOfYear : number;
 
-  plus(data : CivilDateValues) : CivilDate;
-  with(values : CivilDateValues) : CivilDate;
-  withTime(time : CivilTime) : CivilDateTime;
-  toString() : string;
-  toJSON() : string;
-  toDateString() : string;
-  toWeekDateString() : string;
-  toOrdinalDateString() : string;
+  with(date : DateLike) : CivilMonthDay;
+  plus(duration : DurationLike) : CivilMonthDay;
+  minus(duration : DurationLike) : CivilMonthDay;
+  difference(other : DurationLike) : Duration;
 
-  static fromString(isostring : string) : CivilDate;
-  static fromZonedDateTime(instant : ZonedDateTime) : CivilDate;
-  static fromDateTime(datetime : CivilDateTime) : CivilDate;
+  withYear(year : number) : CivilDate;
+  toString() : String;
+  toJSON() : String;
+  fromString(iso : string) : CivilMonthDay
 }
-export class CivilTime {
-  constructor(hours : number, minutes : number, seconds? : number, nanoseconds?: number);
-
-  readonly hour : number;
-  readonly minute : number;
-  readonly second : number;
-  readonly millisecond : number;
-  readonly microsecond : number;
-  readonly nanosecond : number;
-
-  plus(data : CivilTimeValues) : CivilTime;
-  with(values : CivilTimeValues) : CivilTime;
-  withDate(date : CivilDate) : CivilDateTime;
-  toString() : string;
-  toJSON() : string;
-
-  static fromString(isostring : string) : CivilTime;
-  static fromZonedDateTime(instant : ZonedDateTime) : CivilTime;
-  static fromDateTime(datetime: CivilDateTime): CivilTime;
+export class Duration implements DurationLike {
+  readonly years?: number;
+  readonly months?: number;
+  readonly days?: number;
+  readonly hours: number;
+  readonly minutes: number;
+  readonly seconds: number;
+  readonly milliseconds: number;
+  readonly microseconds: number;
+  readonly nanoseconds: number;
 }

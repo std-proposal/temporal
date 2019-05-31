@@ -5,11 +5,9 @@
   "main": "index.js",
   "directories": {},
   "scripts": {
-    "test:es7": "for t in $(ls test/*.mjs); do \"./$t\"; done",
-    "test:262": "npm run build && for FILE in $(find test262/temporal -type f -name '*.js' | grep -v 'test262/node.js'); do node -r ./test262/node.js $FILE; if [ $? = 0 ]; then echo 'OK ' $FILE; else echo 'FAIL ' $FILE; fi; done",
-    "test": "npm run test:es7 && npm run test:262",
+    "test": "./test/all.mjs",
     "prepublishOnly": "npm run build",
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.js && rollup lib/local.mjs --name temporal/local --format=umd -m -o local.js"
   },
   "repository": {
     "type": "git",
@@ -23,9 +21,10 @@
   "author": "Philipp Dunkel <pdunkel1@bloomberg.net>",
   "license": "MIT",
   "devDependencies": {
+    "@pipobscure/demitasse": "^1.0.10",
+    "@pipobscure/demitasse-pretty": "^1.0.10",
     "rollup": "^1.7.0",
     "rollup-plugin-license": "^0.8.1",
-    "rollup-plugin-node-resolve": "^4.0.1",
-    "tape": "^4.10.1"
+    "rollup-plugin-node-resolve": "^4.0.1"
   }
 }

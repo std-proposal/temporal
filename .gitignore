@@ -2,3 +2,6 @@
 node_modules/
 index.js
 index.js.map
+local.js
+local.js.map
+package-lock.json

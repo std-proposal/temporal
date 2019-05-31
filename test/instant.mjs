@@ -1,121 +1,124 @@
-#!/usr/bin/env -S node --experimental-modules
+#! /usr/bin/env node --experimental-modules
 
-/*
-** Copyright (C) 2018 Bloomberg LP. All rights reserved.
-** This code is governed by the license found in the LICENSE file.
-*/
+import Demitasse from '@pipobscure/demitasse';
+const { describe, it, report } = Demitasse;
 
-import test from 'tape';
+import Pretty from '@pipobscure/demitasse-pretty';
+const { reporter } = Pretty;
+
+import Assert from 'assert';
+const { ok: assert, equal, throws } = Assert;
 
 import { Instant } from '../lib/instant.mjs';
 
-const HIGHEST_YYYY_DATE = new Date(Date.parse('9999-12-31T23:59:59.999Z'));
-const LOWEST_YYYY_DATE  = new Date(Date.parse('0000-01-01T00:00:00.000Z'));
-
-test('new Instant()', ({ equal, throws, end })=>{
-  equal(typeof Instant, 'function');
-  throws(() => new Instant(0));
-  const instant = new Instant(111222333444n);
-  equal(typeof instant, 'object');
-  equal(instant.seconds, 111);
-  equal(instant.milliseconds, 111222);
-  equal(instant.microseconds, 111222333n);
-  equal(instant.nanoseconds, 111222333444n);
-  end();
-});
-
-test('instant.toString()', ({ equal, end })=>{
-  const instant = new Instant(0n);
-  equal(instant.toString(), '1970-01-01T00:00:00.000000000Z');
-  end();
-});
-
-test('Instant.fromEpochSeconds()', ({ equal, throws, end })=>{
-  const instant = Instant.fromEpochSeconds(Math.floor(Date.UTC(1976, 10, 18, 15, 23, 30, 100) / 1000));
-  equal(instant.toString(), '1976-11-18T15:23:30.000000000Z');
-  throws(() => Instant.fromEpochSeconds(0n));
-  end();
-});
-
-test('Instant.fromEpochMilliseconds()', ({ equal, throws, end }) => {
-  const instant = Instant.fromEpochMilliseconds(Date.UTC(1976, 10, 18, 15, 23, 30, 123));
-  equal(instant.toString(), '1976-11-18T15:23:30.123000000Z');
-  throws(() => Instant.fromEpochMilliseconds(0n));
-  end();
-});
-
-test('Instant.fromMicroseconds()', ({ equal, throws, end }) => {
-  const instant = Instant.fromEpochMicroseconds(BigInt(Date.UTC(1976, 10, 18, 15, 23, 30, 123) * 1000 + 456));
-  equal(instant.toString(), '1976-11-18T15:23:30.123456000Z');
-  throws(() => Instant.fromEpochMicroseconds(0));
-  end();
-});
-
-test('Instant.fromNanoseconds()', ({ equal, throws, end }) => {
-  const instant = Instant.fromEpochNanoseconds(BigInt(Date.UTC(1976, 10, 18, 15, 23, 30, 123) * 1000 + 456) * 1000n + 789n);
-  equal(instant.toString(), '1976-11-18T15:23:30.123456789Z');
-  throws(() => Instant.fromEpochNanoseconds(0));
-  end();
-});
-
-function dateToInstant(date) {
-  const isoString = date.toISOString();
-  const instantString = `${isoString.slice(0, -1)}000000Z`;
-  return Instant.fromString(instantString);
-}
-
-function instantToDate(instant) {
-  return new Date(instant.milliseconds);
-}
-
-test('Instant.fromString()', ({ test, end }) => {
-  let testCount = 0;
-
-  const dates = [
-    new Date(Date.UTC(0)),
-    new Date(Date.UTC(77)),
-    new Date(Date.UTC(1, 2, 3, 4, 5, 6, 7)),
-    new Date(Date.UTC(1993, 11, 23, 5, 8, 13, 21)),
-    new Date(-9999999999999),
-    new Date(99999999999999),
-    HIGHEST_YYYY_DATE,
-    LOWEST_YYYY_DATE,
-  ];
-
-  dates.forEach((expectedDate) => {
-    test(`Instant.fromString() 1.${++testCount}`, ({ equal, end }) => {
-      const instant = dateToInstant(expectedDate);
-      const actualDate = instantToDate(instant);
-
-      equal(actualDate.toISOString(), expectedDate.toISOString());
-      equal(instant.seconds, Math.floor(actualDate / 1000));
-      equal(instant.milliseconds, actualDate.getTime());
-      equal(instant.microseconds, BigInt(actualDate.getTime()) * 1000n);
-      equal(instant.nanoseconds,  BigInt(actualDate.getTime()) * 1000000n);
-
-      end();
+describe('Instant', ()=>{
+  describe('Structure', ()=>{
+    it('Instant is a Function', ()=>{ equal(typeof Instant, 'function'); });
+    it('Instant has a prototype', ()=>{ assert(Instant.prototype); equal(typeof Instant.prototype, 'object'); });
+    describe('Instant.prototype', ()=>{
+      it('Instant.prototype has epochSeconds', ()=>{ assert('epochSeconds' in Instant.prototype); });
+      it('Instant.prototype has epochMilliseconds', ()=>{ assert('epochMilliseconds' in Instant.prototype); });
+      it('Instant.prototype has epochMicroseconds', ()=>{ assert('epochMicroseconds' in Instant.prototype); });
+      it('Instant.prototype has epochNanoseconds', ()=>{ assert('epochNanoseconds' in Instant.prototype); });
+      it('Instant.prototype.withZone is a Function', ()=>{ equal(typeof Instant.prototype.withZone, 'function'); });
+      it('Instant.prototype.withOffset is a Function', ()=>{ equal(typeof Instant.prototype.withOffset, 'function'); });
+      it('Instant.prototype.toString is a Function', ()=>{ equal(typeof Instant.prototype.toString, 'function'); });
+      it('Instant.prototype.toJSON is a Function', ()=>{ equal(typeof Instant.prototype.toJSON, 'function'); });
+    });
+    it('Instant.fromEpochSeconds is a Function', ()=>{ equal(typeof Instant.fromEpochSeconds, 'function'); });
+    it('Instant.fromEpochMicroseconds is a Function', ()=>{ equal(typeof Instant.fromEpochMicroseconds, 'function'); });
+    it('Instant.fromEpochMilliseconds is a Function', ()=>{ equal(typeof Instant.fromEpochMilliseconds, 'function'); });
+    it('Instant.fromEpochNanoseconds is a Function', ()=>{ equal(typeof Instant.fromEpochNanoseconds, 'function'); });
+    it('Instant.fromString is a Function', ()=>{ equal(typeof Instant.fromString, 'function'); });
+  });
+  describe('Construction', ()=>{
+    it('can construct', ()=>{ 
+      const instant = new Instant(BigInt(Date.UTC(1976, 10, 18, 14, 23, 30, 123)) * BigInt(1e6) + BigInt(456789));
+      assert(instant);
+      equal(typeof instant, 'object');
+      equal(instant.epochSeconds, Math.floor(Date.UTC(1976, 10, 18, 14, 23, 30, 123) / 1e3), 'epochSeconds');
+      equal(instant.epochMilliseconds, Date.UTC(1976, 10, 18, 14, 23, 30, 123), 'epochMilliseconds');
+    });
+    it('throws on number', ()=>throws(()=>new Instant(1234)));
+    it('throws on string', ()=>throws(()=>new Instant('1234')));
+  });
+  describe('instant.toString() works', ()=>{
+    it('`1976-11-18T14:23:30.123456789Z`.toString()', ()=>{
+      const instant = new Instant(BigInt(Date.UTC(1976, 10, 18, 14, 23, 30, 123)) * BigInt(1e6) + BigInt(456789));
+      assert(instant);
+      equal(`${instant}`, '1976-11-18T14:23:30.123456789Z');
+    });
+    it('`1963-02-13T09:36:29.877456789Z`.toString()', ()=>{
+      const instant = new Instant(BigInt(-1) * (BigInt(Date.UTC(1976, 10, 18, 14, 23, 30, 123)) * BigInt(1e6) + BigInt(456789)));
+      assert(instant);
+      equal(`${instant}`, '1963-02-13T09:36:29.877456789Z');
     });
   });
-
-  const strings = [
-    '0000-01-01T00:00:00.000000000Z',
-    '0045-12-31T23:59:59.999999999Z',
-    '9999-12-31T23:59:59.999999999Z',
-    '1970-01-01T00:00:00.000000000Z',
-    '1976-11-18T15:23:30.000000000Z',
-    '1976-11-18T15:23:30.123456789Z',
-  ];
-
-  strings.forEach((expectedString) => {
-    test(`Instant.fromString() 2.${++testCount}`, ({ equal, end }) => {
-      const instant = Instant.fromString(expectedString);
-      const actualString = instant.toString();
-
-      equal(actualString, expectedString);
-      end();
+  describe('Instant.fromEpochSeconds() works', ()=>{
+    it('1976-11-18T15:23:30', ()=>{
+      const epochSeconds = Math.floor(Date.UTC(1976,10,18,15,23,30,123) / 1e3);
+      const instant = Instant.fromEpochSeconds(epochSeconds);
+      equal(instant.epochSeconds, epochSeconds);
+    });
+    it('1963-02-13T09:36:29', ()=>{
+      const epochSeconds = Math.floor(Date.UTC(1963,1,13,9,36,29,123) / 1e3);
+      const instant = Instant.fromEpochSeconds(epochSeconds);
+      equal(instant.epochSeconds, epochSeconds);
     });
   });
-
-  end();
-
+  describe('Instant.fromEpochMilliseconds() works', ()=>{
+    it('1976-11-18T15:23:30.123', ()=>{
+      const epochMilliseconds = Date.UTC(1976,10,18,15,23,30,123);
+      const instant = Instant.fromEpochMilliseconds(epochMilliseconds);
+      equal(instant.epochMilliseconds, epochMilliseconds);
+    });
+    it('1963-02-13T09:36:29.123', ()=>{
+      const epochMilliseconds = Date.UTC(1963,1,13,9,36,29,123);
+      const instant = Instant.fromEpochMilliseconds(epochMilliseconds);
+      equal(instant.epochMilliseconds, epochMilliseconds);
+    });
+  });
+  describe('Instant.fromEpochMicroseconds() works', ()=>{
+    it('1976-11-18T15:23:30.123456', ()=>{
+      const epochMicroseconds = BigInt(Date.UTC(1976,10,18,15,23,30,123)) * BigInt(1e3) + BigInt(456);
+      const instant = Instant.fromEpochMicroseconds(epochMicroseconds);
+      equal(instant.epochMicroseconds, epochMicroseconds);
+    });
+    it('1963-02-13T09:36:29.123456', ()=>{
+      const epochMicroseconds = BigInt(Date.UTC(1963,1,13,9,36,29,123)) * BigInt(1e3) + BigInt(456);
+      const instant = Instant.fromEpochMicroseconds(epochMicroseconds);
+      equal(instant.epochMicroseconds, epochMicroseconds);
+    });
+  });
+  describe('Instant.fromEpochNanoseconds() works', ()=>{
+    it('1976-11-18T15:23:30.123456789', ()=>{
+      const epochNanoseconds = BigInt(Date.UTC(1976,10,18,15,23,30,123)) * BigInt(1e6) + BigInt(456789);
+      const instant = Instant.fromEpochNanoseconds(epochNanoseconds);
+      equal(instant.epochNanoseconds, epochNanoseconds);
+    });
+    it('1963-02-13T09:36:29.123456789', ()=>{
+      const epochNanoseconds = BigInt(Date.UTC(1963,1,13,9,36,29,123)) * BigInt(1e6) + BigInt(456789);
+      const instant = Instant.fromEpochNanoseconds(epochNanoseconds);
+      equal(instant.epochNanoseconds, epochNanoseconds);
+    });
+  });
+  describe('Instant.fromString() works', ()=>{
+    it('1976-11-18T15:23Z', ()=>{
+      equal(Instant.fromString('1976-11-18T15:23Z').epochMilliseconds, Date.UTC(1976,10,18,15,23));
+    });
+    it('1976-11-18T15:23:30Z', ()=>{
+      equal(Instant.fromString('1976-11-18T15:23:30Z').epochMilliseconds, Date.UTC(1976,10,18,15,23,30));
+    });
+    it('1976-11-18T15:23:30.123Z', ()=>{
+      equal(Instant.fromString('1976-11-18T15:23:30.123Z').epochMilliseconds, Date.UTC(1976,10,18,15,23,30,123));
+    });
+    it('1976-11-18T15:23:30.123456Z', ()=>{
+      equal(Instant.fromString('1976-11-18T15:23:30.123456Z').epochMicroseconds, BigInt(Date.UTC(1976,10,18,15,23,30,123)) * BigInt(1e3) + BigInt(456));
+    });
+    it('1976-11-18T15:23:30.123456789Z', ()=>{
+      equal(Instant.fromString('1976-11-18T15:23:30.123456789Z').epochNanoseconds, BigInt(Date.UTC(1976,10,18,15,23,30,123)) * BigInt(1e6) + BigInt(456789));
+    });
+  });
 });
+
+if (import.meta.url.indexOf(process.argv[1]) === 7) report(reporter);

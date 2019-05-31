@@ -1,77 +1,89 @@
 #! /usr/bin/env node --experimental-modules
 
-/*
-** Copyright (C) 2018 Bloomberg LP. All rights reserved.
-** This code is governed by the license found in the LICENSE file.
-*/
+import Demitasse from '@pipobscure/demitasse';
+const { describe, it, report } = Demitasse;
 
-import test from 'tape';
+import Pretty from '@pipobscure/demitasse-pretty';
+const { reporter } = Pretty;
+
+import Assert from 'assert';
+const { ok: assert, equal } = Assert;
 
 import { Instant } from '../lib/instant.mjs';
-import { Zoned } from '../lib/zoned.mjs';
+import { ZonedDateTime } from '../lib/zoned.mjs';
 
-test('new Zoned()', ({ equal, end }) => {
-  const instant = Instant.fromEpochMilliseconds(Date.UTC(1976, 10, 18, 14, 23, 30, 123));
-  const zoned = new Zoned(instant, 'Europe/Vienna');
-  equal(zoned.offsetSeconds, 3600);
-  equal((new Zoned(instant, 'Europe/Vienna')).toString(), '1976-11-18T15:23:30.123000000+01:00[Europe/Vienna]');
-  equal((new Zoned(instant, '+1')).toString(), '1976-11-18T15:23:30.123000000+01:00');
-  equal((new Zoned(instant, '+0100')).toString(), '1976-11-18T15:23:30.123000000+01:00');
-  equal((new Zoned(instant, '+01:00')).toString(), '1976-11-18T15:23:30.123000000+01:00');
-  end();
+describe('ZonedDateTime', ()=>{
+  describe('Structure', ()=>{
+    it('ZonedDateTime is a Function', ()=>{ equal(typeof ZonedDateTime, 'function'); });
+    it('ZonedDateTime has a prototype', ()=>{ assert(ZonedDateTime.prototype); equal(typeof ZonedDateTime.prototype, 'object'); });
+    describe('ZonedDateTime.prototype', ()=>{
+      it('ZonedDateTime.prototype has year', ()=>{ assert('year' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has month', ()=>{ assert('month' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has day', ()=>{ assert('day' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has hour', ()=>{ assert('hour' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has minute', ()=>{ assert('minute' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has second', ()=>{ assert('second' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has millisecond', ()=>{ assert('millisecond' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has microsecond', ()=>{ assert('microsecond' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has nanosecond', ()=>{ assert('nanosecond' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has dayOfWeek', ()=>{ assert('dayOfWeek' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has dayOfYear', ()=>{ assert('dayOfYear' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype has weekOfYear', ()=>{ assert('weekOfYear' in ZonedDateTime.prototype); });
+      it('ZonedDateTime.prototype.with is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.with, 'function'); });
+      it('ZonedDateTime.prototype.getOffsetDateTime is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getOffsetDateTime, 'function'); });
+      it('ZonedDateTime.prototype.getCivilDateTime is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilDateTime, 'function'); });
+      it('ZonedDateTime.prototype.getCivilDate is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilDate, 'function'); });
+      it('ZonedDateTime.prototype.getCivilTime is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilTime, 'function'); });
+      it('ZonedDateTime.prototype.getCivilYearMonth is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilYearMonth, 'function'); });
+      it('ZonedDateTime.prototype.getCivilMonthDay is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilMonthDay, 'function'); });
+      it('ZonedDateTime.prototype.toString is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.toString, 'function'); });
+      it('ZonedDateTime.prototype.toJSON is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.toJSON, 'function'); });
+    });
+    it('ZonedDateTime.fromString is a Function', ()=>{ equal(typeof ZonedDateTime.fromString, 'function'); });
+  });
+  describe('Construction', ()=>{
+    describe('new ZonedDateTime(Instant.fromString("1976-11-18T14:23:30.123456789Z"), "Europe/Vienna")', ()=>{
+      let offsetdatetime;
+      it('offsetdatetime can be constructed', ()=>{
+        offsetdatetime = new ZonedDateTime(Instant.fromString("1976-11-18T14:23:30.123456789Z"), "Europe/Vienna");
+        assert(offsetdatetime);
+        equal(typeof offsetdatetime, 'object');
+      });
+      it('offsetdatetime.year is 1976', ()=>equal(offsetdatetime.year, 1976));
+      it('offsetdatetime.month is 11', ()=>equal(offsetdatetime.month, 11));
+      it('offsetdatetime.day is 18', ()=>equal(offsetdatetime.day, 18));
+      it('offsetdatetime.hour is 15', ()=>equal(offsetdatetime.hour, 15));
+      it('offsetdatetime.minute is 23', ()=>equal(offsetdatetime.minute, 23));
+      it('offsetdatetime.second is 30', ()=>equal(offsetdatetime.second, 30));
+      it('offsetdatetime.millisecond is 123', ()=>equal(offsetdatetime.millisecond, 123));
+      it('offsetdatetime.microsecond is 456', ()=>equal(offsetdatetime.microsecond, 456));
+      it('offsetdatetime.nanosecond is 789', ()=>equal(offsetdatetime.nanosecond, 789));
+      it('offsetdatetime.dayOfWeek is 4', ()=>equal(offsetdatetime.dayOfWeek, 4));
+      it('offsetdatetime.dayOfYear is 323', ()=>equal(offsetdatetime.dayOfYear, 323));
+      it('offsetdatetime.weekOfYear is 47', ()=>equal(offsetdatetime.weekOfYear, 47));
+      it('`${offsetdatetime}` is 1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]', ()=>equal(`${offsetdatetime}`, '1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]'));
+    });
+  });
+  describe('.with manipulation', ()=>{
+    const offsetdatetime = new ZonedDateTime(Instant.fromString('1976-11-18T14:23:30.123456789Z'), 'Europe/Vienna');
+    it('offsetdatetime.with({ year: 2019 } works', ()=>{ equal(`${offsetdatetime.with({ year: 2019 })}`, '2019-11-18T15:23:30.123456789+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ month: 5 } works', ()=>{ equal(`${offsetdatetime.with({ month: 5 })}`, '1976-05-18T15:23:30.123456789+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ day: 5 } works', ()=>{ equal(`${offsetdatetime.with({ day: 5 })}`, '1976-11-05T15:23:30.123456789+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ hour: 5 } works', ()=>{ equal(`${offsetdatetime.with({ hour: 5 })}`, '1976-11-18T05:23:30.123456789+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ minute: 5 } works', ()=>{ equal(`${offsetdatetime.with({ minute: 5 })}`, '1976-11-18T15:05:30.123456789+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ second: 5 } works', ()=>{ equal(`${offsetdatetime.with({ second: 5 })}`, '1976-11-18T15:23:05.123456789+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ millisecond: 5 } works', ()=>{ equal(`${offsetdatetime.with({ millisecond: 5 })}`, '1976-11-18T15:23:30.005456789+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ microsecond: 5 } works', ()=>{ equal(`${offsetdatetime.with({ microsecond: 5 })}`, '1976-11-18T15:23:30.123005789+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ nanosecond: 5 } works', ()=>{ equal(`${offsetdatetime.with({ nanosecond: 5 })}`, '1976-11-18T15:23:30.123456005+01:00[Europe/Vienna]'); });
+    it('offsetdatetime.with({ month: 5, second: 15 } works', ()=>{ equal(`${offsetdatetime.with({ month: 5, second: 15 })}`, '1976-05-18T15:23:15.123456789+01:00[Europe/Vienna]'); });
+  });
+  describe('ZonedDateTime.fromString() works', ()=>{
+    it('ZonedDateTime.fromString("1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]'); });
+    it('ZonedDateTime.fromString("1976-11-18T15:23:30.123456+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123456+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123456000+01:00[Europe/Vienna]'); });
+    it('ZonedDateTime.fromString("1976-11-18T15:23:30.123+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123000000+01:00[Europe/Vienna]'); });
+    it('ZonedDateTime.fromString("1976-11-18T15:23:30+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.000000000+01:00[Europe/Vienna]'); });
+    it('ZonedDateTime.fromString("1976-11-18T15:23+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:00.000000000+01:00[Europe/Vienna]'); });
+  });
 });
 
-test('zoned.offsetString', ({ equal, end })=>{
-  const instant = new Instant(1537820555356000000n);
-  equal((new Zoned(instant, 'UTC')).offsetString, '+00:00');
-  equal((new Zoned(instant, 'Europe/London')).offsetString, '+01:00');
-  equal((new Zoned(instant, 'Europe/Berlin')).offsetString, '+02:00');
-  equal((new Zoned(instant, 'America/New_York')).offsetString, '-04:00');
-  equal((new Zoned(instant, 'America/Vancouver')).offsetString, '-07:00');
-  equal((new Zoned(instant, '+04:00')).offsetString, '+04:00');
-  end();
-});
-
-test('zoned.offsetSeconds', ({ equal, end }) => {
-  const instant = new Instant(1537820555356000000n);
-  equal((new Zoned(instant, 'UTC')).offsetSeconds, 0);
-  equal((new Zoned(instant, 'Europe/London')).offsetSeconds, 3600);
-  equal((new Zoned(instant, 'Europe/Berlin')).offsetSeconds, 7200);
-  equal((new Zoned(instant, 'America/New_York')).offsetSeconds, -14400);
-  equal((new Zoned(instant, 'America/Vancouver')).offsetSeconds, -25200);
-  equal((new Zoned(instant, '+04:00')).offsetSeconds, 14400);
-  end();
-});
-
-test('zoned.ianaZone', ({ equal, end }) => {
-  const instant = new Instant(1537820555356000000n);
-  equal((new Zoned(instant, 'UTC')).ianaZone, 'UTC');
-  equal((new Zoned(instant, 'Europe/London')).ianaZone, 'Europe/London');
-  equal((new Zoned(instant, 'Europe/Berlin')).ianaZone, 'Europe/Berlin');
-  equal((new Zoned(instant, 'America/New_York')).ianaZone, 'America/New_York');
-  equal((new Zoned(instant, 'America/Vancouver')).ianaZone, 'America/Vancouver');
-  equal((new Zoned(instant, '+04:00')).ianaZone, undefined);
-  end();
-});
-
-test('zoned.timeZone', ({ equal, end }) => {
-  const instant = new Instant(1537820555356000000n);
-  equal((new Zoned(instant, 'UTC')).timeZone, 'UTC');
-  equal((new Zoned(instant, 'Europe/London')).timeZone, 'Europe/London');
-  equal((new Zoned(instant, 'Europe/Berlin')).timeZone, 'Europe/Berlin');
-  equal((new Zoned(instant, 'America/New_York')).timeZone, 'America/New_York');
-  equal((new Zoned(instant, 'America/Vancouver')).timeZone, 'America/Vancouver');
-  equal((new Zoned(instant, '+04:00')).timeZone, '+04:00');
-  end();
-});
-
-test('zoned.toString()', ({ equal, end }) => {
-  const instant = new Instant(1537820555356123456n);
-  equal('' + (new Zoned(instant, 'UTC')), '2018-09-24T20:22:35.356123456+00:00[UTC]');
-  equal('' + (new Zoned(instant, 'Europe/London')), '2018-09-24T21:22:35.356123456+01:00[Europe/London]');
-  equal('' + (new Zoned(instant, 'Europe/Berlin')), '2018-09-24T22:22:35.356123456+02:00[Europe/Berlin]');
-  equal('' + (new Zoned(instant, 'America/New_York')), '2018-09-24T16:22:35.356123456-04:00[America/New_York]');
-  equal('' + (new Zoned(instant, 'America/Vancouver')), '2018-09-24T13:22:35.356123456-07:00[America/Vancouver]');
-  equal('' + (new Zoned(instant, '+04:00')), '2018-09-25T00:22:35.356123456+04:00');
-  end();
-});
+if (import.meta.url.indexOf(process.argv[1]) === 7) report(reporter);
