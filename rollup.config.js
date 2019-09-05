@@ -3,7 +3,7 @@ import license from 'rollup-plugin-license';
 import { join } from 'path';
 
 export default {
-  input: 'lib/index.mjs',
+  input: 'lib/temporal.mjs',
   plugins: [
     nodeResolve({
       jsnext: true

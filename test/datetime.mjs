@@ -9,42 +9,41 @@ const { reporter } = Pretty;
 import Assert from 'assert';
 const { ok: assert, equal } = Assert;
 
-import { CivilDateTime } from '../lib/datetime.mjs';
+import { DateTime } from '../lib/datetime.mjs';
 
-describe('CivilDateTime', ()=>{
+describe('DateTime', ()=>{
   describe('Structure', ()=>{
-    it('CivilDateTime is a Function', ()=>{ equal(typeof CivilDateTime, 'function'); });
-    it('CivilDateTime has a prototype', ()=>{ assert(CivilDateTime.prototype); equal(typeof CivilDateTime.prototype, 'object'); });
-    describe('CivilDateTime.prototype', ()=>{
-      it('CivilDateTime.prototype has year', ()=>{ assert('year' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has month', ()=>{ assert('month' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has day', ()=>{ assert('day' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has hour', ()=>{ assert('hour' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has minute', ()=>{ assert('minute' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has second', ()=>{ assert('second' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has millisecond', ()=>{ assert('millisecond' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has microsecond', ()=>{ assert('microsecond' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has nanosecond', ()=>{ assert('nanosecond' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has dayOfWeek', ()=>{ assert('dayOfWeek' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has dayOfYear', ()=>{ assert('dayOfYear' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype has weekOfYear', ()=>{ assert('weekOfYear' in CivilDateTime.prototype); });
-      it('CivilDateTime.prototype.with is a Function', ()=>{ equal(typeof CivilDateTime.prototype.with, 'function'); });
-      it('CivilDateTime.prototype.plus is a Function', ()=>{ equal(typeof CivilDateTime.prototype.plus, 'function'); });
-      it('CivilDateTime.prototype.minus is a Function', ()=>{ equal(typeof CivilDateTime.prototype.minus, 'function'); });
-      it('CivilDateTime.prototype.difference is a Function', ()=>{ equal(typeof CivilDateTime.prototype.difference, 'function'); });
-      it('CivilDateTime.prototype.withZone is a Function', ()=>{ equal(typeof CivilDateTime.prototype.withZone, 'function'); });
-      it('CivilDateTime.prototype.withOffset is a Function', ()=>{ equal(typeof CivilDateTime.prototype.withOffset, 'function'); });
-      it('CivilDateTime.prototype.getCivilDate is a Function', ()=>{ equal(typeof CivilDateTime.prototype.getCivilDate, 'function'); });
-      it('CivilDateTime.prototype.getCivilTime is a Function', ()=>{ equal(typeof CivilDateTime.prototype.getCivilTime, 'function'); });
-      it('CivilDateTime.prototype.toString is a Function', ()=>{ equal(typeof CivilDateTime.prototype.toString, 'function'); });
-      it('CivilDateTime.prototype.toJSON is a Function', ()=>{ equal(typeof CivilDateTime.prototype.toJSON, 'function'); });
+    it('DateTime is a Function', ()=>{ equal(typeof DateTime, 'function'); });
+    it('DateTime has a prototype', ()=>{ assert(DateTime.prototype); equal(typeof DateTime.prototype, 'object'); });
+    describe('DateTime.prototype', ()=>{
+      it('DateTime.prototype has year', ()=>{ assert('year' in DateTime.prototype); });
+      it('DateTime.prototype has month', ()=>{ assert('month' in DateTime.prototype); });
+      it('DateTime.prototype has day', ()=>{ assert('day' in DateTime.prototype); });
+      it('DateTime.prototype has hour', ()=>{ assert('hour' in DateTime.prototype); });
+      it('DateTime.prototype has minute', ()=>{ assert('minute' in DateTime.prototype); });
+      it('DateTime.prototype has second', ()=>{ assert('second' in DateTime.prototype); });
+      it('DateTime.prototype has millisecond', ()=>{ assert('millisecond' in DateTime.prototype); });
+      it('DateTime.prototype has microsecond', ()=>{ assert('microsecond' in DateTime.prototype); });
+      it('DateTime.prototype has nanosecond', ()=>{ assert('nanosecond' in DateTime.prototype); });
+      it('DateTime.prototype has dayOfWeek', ()=>{ assert('dayOfWeek' in DateTime.prototype); });
+      it('DateTime.prototype has dayOfYear', ()=>{ assert('dayOfYear' in DateTime.prototype); });
+      it('DateTime.prototype has weekOfYear', ()=>{ assert('weekOfYear' in DateTime.prototype); });
+      it('DateTime.prototype.with is a Function', ()=>{ equal(typeof DateTime.prototype.with, 'function'); });
+      it('DateTime.prototype.plus is a Function', ()=>{ equal(typeof DateTime.prototype.plus, 'function'); });
+      it('DateTime.prototype.minus is a Function', ()=>{ equal(typeof DateTime.prototype.minus, 'function'); });
+      it('DateTime.prototype.difference is a Function', ()=>{ equal(typeof DateTime.prototype.difference, 'function'); });
+      it('DateTime.prototype.withZone is a Function', ()=>{ equal(typeof DateTime.prototype.withZone, 'function'); });
+      it('DateTime.prototype.getDate is a Function', ()=>{ equal(typeof DateTime.prototype.getDate, 'function'); });
+      it('DateTime.prototype.getTime is a Function', ()=>{ equal(typeof DateTime.prototype.getTime, 'function'); });
+      it('DateTime.prototype.toString is a Function', ()=>{ equal(typeof DateTime.prototype.toString, 'function'); });
+      it('DateTime.prototype.toJSON is a Function', ()=>{ equal(typeof DateTime.prototype.toJSON, 'function'); });
     });
-    it('CivilDateTime.fromString is a Function', ()=>{ equal(typeof CivilDateTime.fromString, 'function'); });
+    it('DateTime.fromString is a Function', ()=>{ equal(typeof DateTime.fromString, 'function'); });
   });
   describe('Construction', ()=>{
-    describe('new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789)', ()=>{
+    describe('new DateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789)', ()=>{
       let datetime;
-      it('datetime can be constructed', ()=>{ datetime = new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789); assert(datetime); equal(typeof datetime, 'object'); });
+      it('datetime can be constructed', ()=>{ datetime = new DateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789); assert(datetime); equal(typeof datetime, 'object'); });
       it('datetime.year is 1976', ()=>equal(datetime.year, 1976));
       it('datetime.month is 11', ()=>equal(datetime.month, 11));
       it('datetime.day is 18', ()=>equal(datetime.day, 18));
@@ -59,9 +58,9 @@ describe('CivilDateTime', ()=>{
       it('datetime.weekOfYear is 47', ()=>equal(datetime.weekOfYear, 47));
       it('`${datetime}` is 1976-11-18T15:23:30.123456789', ()=>equal(`${datetime}`, '1976-11-18T15:23:30.123456789'));
     });
-    describe('new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456)', ()=>{
+    describe('new DateTime(1976, 11, 18, 15, 23, 30, 123, 456)', ()=>{
       let datetime;
-      it('datetime can be constructed', ()=>{ datetime = new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456); assert(datetime); equal(typeof datetime, 'object'); });
+      it('datetime can be constructed', ()=>{ datetime = new DateTime(1976, 11, 18, 15, 23, 30, 123, 456); assert(datetime); equal(typeof datetime, 'object'); });
       it('datetime.year is 1976', ()=>equal(datetime.year, 1976));
       it('datetime.month is 11', ()=>equal(datetime.month, 11));
       it('datetime.day is 18', ()=>equal(datetime.day, 18));
@@ -74,11 +73,11 @@ describe('CivilDateTime', ()=>{
       it('datetime.dayOfWeek is 4', ()=>equal(datetime.dayOfWeek, 4));
       it('datetime.dayOfYear is 323', ()=>equal(datetime.dayOfYear, 323));
       it('datetime.weekOfYear is 47', ()=>equal(datetime.weekOfYear, 47));
-      it('`${datetime}` is 1976-11-18T15:23:30.123456000', ()=>equal(`${datetime}`, '1976-11-18T15:23:30.123456000'));
+      it('`${datetime}` is 1976-11-18T15:23:30.123456', ()=>equal(`${datetime}`, '1976-11-18T15:23:30.123456'));
     });
-    describe('new CivilDateTime(1976, 11, 18, 15, 23, 30, 123)', ()=>{
+    describe('new DateTime(1976, 11, 18, 15, 23, 30, 123)', ()=>{
       let datetime;
-      it('datetime can be constructed', ()=>{ datetime = new CivilDateTime(1976, 11, 18, 15, 23, 30, 123); assert(datetime); equal(typeof datetime, 'object'); });
+      it('datetime can be constructed', ()=>{ datetime = new DateTime(1976, 11, 18, 15, 23, 30, 123); assert(datetime); equal(typeof datetime, 'object'); });
       it('datetime.year is 1976', ()=>equal(datetime.year, 1976));
       it('datetime.month is 11', ()=>equal(datetime.month, 11));
       it('datetime.day is 18', ()=>equal(datetime.day, 18));
@@ -91,11 +90,11 @@ describe('CivilDateTime', ()=>{
       it('datetime.dayOfWeek is 4', ()=>equal(datetime.dayOfWeek, 4));
       it('datetime.dayOfYear is 323', ()=>equal(datetime.dayOfYear, 323));
       it('datetime.weekOfYear is 47', ()=>equal(datetime.weekOfYear, 47));
-      it('`${datetime}` is 1976-11-18T15:23:30.123000000', ()=>equal(`${datetime}`, '1976-11-18T15:23:30.123000000'));
+      it('`${datetime}` is 1976-11-18T15:23:30.123', ()=>equal(`${datetime}`, '1976-11-18T15:23:30.123'));
     });
-    describe('new CivilDateTime(1976, 11, 18, 15, 23, 30)', ()=>{
+    describe('new DateTime(1976, 11, 18, 15, 23, 30)', ()=>{
       let datetime;
-      it('datetime can be constructed', ()=>{ datetime = new CivilDateTime(1976, 11, 18, 15, 23, 30); assert(datetime); equal(typeof datetime, 'object'); });
+      it('datetime can be constructed', ()=>{ datetime = new DateTime(1976, 11, 18, 15, 23, 30); assert(datetime); equal(typeof datetime, 'object'); });
       it('datetime.year is 1976', ()=>equal(datetime.year, 1976));
       it('datetime.month is 11', ()=>equal(datetime.month, 11));
       it('datetime.day is 18', ()=>equal(datetime.day, 18));
@@ -108,11 +107,11 @@ describe('CivilDateTime', ()=>{
       it('datetime.dayOfWeek is 4', ()=>equal(datetime.dayOfWeek, 4));
       it('datetime.dayOfYear is 323', ()=>equal(datetime.dayOfYear, 323));
       it('datetime.weekOfYear is 47', ()=>equal(datetime.weekOfYear, 47));
-      it('`${datetime}` is 1976-11-18T15:23:30.000000000', ()=>equal(`${datetime}`, '1976-11-18T15:23:30.000000000'));
+      it('`${datetime}` is 1976-11-18T15:23:30', ()=>equal(`${datetime}`, '1976-11-18T15:23:30'));
     });
-    describe('new CivilDateTime(1976, 11, 18, 15, 23)', ()=>{
+    describe('new DateTime(1976, 11, 18, 15, 23)', ()=>{
       let datetime;
-      it('datetime can be constructed', ()=>{ datetime = new CivilDateTime(1976, 11, 18, 15, 23); assert(datetime); equal(typeof datetime, 'object'); });
+      it('datetime can be constructed', ()=>{ datetime = new DateTime(1976, 11, 18, 15, 23); assert(datetime); equal(typeof datetime, 'object'); });
       it('datetime.year is 1976', ()=>equal(datetime.year, 1976));
       it('datetime.month is 11', ()=>equal(datetime.month, 11));
       it('datetime.day is 18', ()=>equal(datetime.day, 18));
@@ -125,11 +124,11 @@ describe('CivilDateTime', ()=>{
       it('datetime.dayOfWeek is 4', ()=>equal(datetime.dayOfWeek, 4));
       it('datetime.dayOfYear is 323', ()=>equal(datetime.dayOfYear, 323));
       it('datetime.weekOfYear is 47', ()=>equal(datetime.weekOfYear, 47));
-      it('`${datetime}` is 1976-11-18T15:23:00.000000000', ()=>equal(`${datetime}`, '1976-11-18T15:23:00.000000000'));
+      it('`${datetime}` is 1976-11-18T15:23:00', ()=>equal(`${datetime}`, '1976-11-18T15:23:00'));
     });
   });
   describe('.with manipulation', ()=>{
-    const datetime = new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789);
+    const datetime = new DateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789);
     it('datetime.with({ year: 2019 } works', ()=>{ equal(`${datetime.with({ year: 2019 })}`, '2019-11-18T15:23:30.123456789'); });
     it('datetime.with({ month: 5 } works', ()=>{ equal(`${datetime.with({ month: 5 })}`, '1976-05-18T15:23:30.123456789'); });
     it('datetime.with({ day: 5 } works', ()=>{ equal(`${datetime.with({ day: 5 })}`, '1976-11-05T15:23:30.123456789'); });
@@ -142,33 +141,33 @@ describe('CivilDateTime', ()=>{
     it('datetime.with({ month: 5, second: 15 } works', ()=>{ equal(`${datetime.with({ month: 5, second: 15 })}`, '1976-05-18T15:23:15.123456789'); });
   });
   describe('datetime.difference() works', ()=>{
-    const datetime = new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789);
+    const datetime = new DateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789);
     it('datetime.difference({ year: 1976, month: 10, day: 5, hour: 15, minute: 23, second: 30, millisecond: 123, microsecond: 456, nanosecond: 789 })', ()=>{
       const duration = datetime.difference({ year: 1976, month: 10, day: 5, hour: 15, minute: 23, second: 30, millisecond: 123, microsecond: 456, nanosecond: 789 });
-      equal(duration.years, 0, 'years');
-      equal(duration.months, 1, 'months');
-      equal(duration.days, 13, 'days');
-      equal(duration.hours, 0);
-      equal(duration.minutes, 0);
-      equal(duration.seconds, 0);
-      equal(duration.milliseconds, 0);
-      equal(duration.microseconds, 0);
-      equal(duration.nanoseconds, 0);
+      equal(duration.years, 0, 'years', `${duration} years`);
+      equal(duration.months, 1, 'months', `${duration} months`);
+      equal(duration.days, 13, 'days', `${duration} days`);
+      equal(duration.hours, 0, `${duration} hours`);
+      equal(duration.minutes, 0, `${duration} minutes`);
+      equal(duration.seconds, 0, `${duration} seconds`);
+      equal(duration.milliseconds, 0, `${duration} milliseconds`);
+      equal(duration.microseconds, 0, `${duration} microseconds`);
+      equal(duration.nanoseconds, 0, `${duration} nanoseconds`);
     });
     it('datetime.difference({ year: 1976, month: 10, day: 5, hour: 15, minute: 23, second: 30 })', ()=>{
       const duration = datetime.difference({ year: 1976, month: 10, day: 5, hour: 15, minute: 23, second: 30 });
-      equal(duration.years, 0, 'years');
-      equal(duration.months, 1, 'months');
-      equal(duration.days, 13, 'days');
-      equal(duration.hours, 0);
-      equal(duration.minutes, 0);
-      equal(duration.seconds, 0);
-      equal(duration.milliseconds, 123);
-      equal(duration.microseconds, 456);
-      equal(duration.nanoseconds, 789);
+      equal(duration.years, 0, 'years', `${duration} years`);
+      equal(duration.months, 1, 'months', `${duration} months`);
+      equal(duration.days, 13, 'days', `${duration} days`);
+      equal(duration.hours, 0, `${duration} hours`);
+      equal(duration.minutes, 0, `${duration} minutes`);
+      equal(duration.seconds, 0, `${duration} seconds`);
+      equal(duration.milliseconds, 123, `${duration} milliseconds`);
+      equal(duration.microseconds, 456, `${duration} microseconds`);
+      equal(duration.nanoseconds, 789, `${duration} nanoseconds`);
     });
     describe('datetime.plus() works', ()=>{
-      const datetime = new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789);
+      const datetime = new DateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789);
       it('datetime.plus({ years: 43 })', ()=>{ equal(`${datetime.plus({ years: 43 })}`, '2019-11-18T15:23:30.123456789'); });
       it('datetime.plus({ months: 3 })', ()=>{ equal(`${datetime.plus({ months: 3 })}`, '1977-02-18T15:23:30.123456789'); });
       it('datetime.plus({ days: 20 })', ()=>{ equal(`${datetime.plus({ days: 20 })}`, '1976-12-08T15:23:30.123456789'); });
@@ -177,7 +176,7 @@ describe('CivilDateTime', ()=>{
       it('datetime.plus({ seconds: 40 })', ()=>{ equal(`${datetime.plus({ seconds: 40 })}`, '1976-11-18T15:24:10.123456789'); });
     });
     describe('datetime.minus() works', ()=>{
-      const datetime = new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789);
+      const datetime = new DateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789);
       it('datetime.minus({ years: 21 })', ()=>{ equal(`${datetime.minus({ years: 21 })}`, '1955-11-18T15:23:30.123456789'); });
       it('datetime.minus({ months: 13 })', ()=>{ equal(`${datetime.minus({ months: 13 })}`, '1975-10-18T15:23:30.123456789'); });
       it('datetime.minus({ days: 20 })', ()=>{ equal(`${datetime.minus({ days: 20 })}`, '1976-10-29T15:23:30.123456789'); });
@@ -186,20 +185,21 @@ describe('CivilDateTime', ()=>{
       it('datetime.minus({ seconds: 40 })', ()=>{ equal(`${datetime.minus({ seconds: 40 })}`, '1976-11-18T15:22:50.123456789'); });
     });
     describe('date.toString() works', ()=>{
-      it('new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789).toString()', ()=>{ equal(new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789).toString(), '1976-11-18T15:23:30.123456789'); });
-      it('new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456).toString()', ()=>{ equal(new CivilDateTime(1976, 11, 18, 15, 23, 30, 123, 456).toString(), '1976-11-18T15:23:30.123456000'); });
-      it('new CivilDateTime(1976, 11, 18, 15, 23, 30, 123).toString()', ()=>{ equal(new CivilDateTime(1976, 11, 18, 15, 23, 30, 123).toString(), '1976-11-18T15:23:30.123000000'); });
-      it('new CivilDateTime(1976, 11, 18, 15, 23, 30).toString()', ()=>{ equal(new CivilDateTime(1976, 11, 18, 15, 23, 30).toString(), '1976-11-18T15:23:30.000000000'); });
-      it('new CivilDateTime(1976, 11, 18, 15, 23).toString()', ()=>{ equal(new CivilDateTime(1976, 11, 18, 15, 23).toString(), '1976-11-18T15:23:00.000000000'); });
+      it('new DateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789).toString()', ()=>{ equal(new DateTime(1976, 11, 18, 15, 23, 30, 123, 456, 789).toString(), '1976-11-18T15:23:30.123456789'); });
+      it('new DateTime(1976, 11, 18, 15, 23, 30, 123, 456).toString()', ()=>{ equal(new DateTime(1976, 11, 18, 15, 23, 30, 123, 456).toString(), '1976-11-18T15:23:30.123456'); });
+      it('new DateTime(1976, 11, 18, 15, 23, 30, 123).toString()', ()=>{ equal(new DateTime(1976, 11, 18, 15, 23, 30, 123).toString(), '1976-11-18T15:23:30.123'); });
+      it('new DateTime(1976, 11, 18, 15, 23, 30).toString()', ()=>{ equal(new DateTime(1976, 11, 18, 15, 23, 30).toString(), '1976-11-18T15:23:30'); });
+      it('new DateTime(1976, 11, 18, 15, 23).toString()', ()=>{ equal(new DateTime(1976, 11, 18, 15, 23).toString(), '1976-11-18T15:23:00'); });
     });
-    describe('CivilDateTime.fromString() works', ()=>{
-      it('CivilDateTime.fromString("1976-11-18T15:23:30.123456789")', ()=>{ equal(`${CivilDateTime.fromString("1976-11-18T15:23:30.123456789")}`, '1976-11-18T15:23:30.123456789'); });
-      it('CivilDateTime.fromString("1976-11-18T15:23:30.123456")', ()=>{ equal(`${CivilDateTime.fromString("1976-11-18T15:23:30.123456")}`, '1976-11-18T15:23:30.123456000'); });
-      it('CivilDateTime.fromString("1976-11-18T15:23:30.123")', ()=>{ equal(`${CivilDateTime.fromString("1976-11-18T15:23:30.123")}`, '1976-11-18T15:23:30.123000000'); });
-      it('CivilDateTime.fromString("1976-11-18T15:23:30")', ()=>{ equal(`${CivilDateTime.fromString("1976-11-18T15:23:30")}`, '1976-11-18T15:23:30.000000000'); });
-      it('CivilDateTime.fromString("1976-11-18T15:23")', ()=>{ equal(`${CivilDateTime.fromString("1976-11-18T15:23")}`, '1976-11-18T15:23:00.000000000'); });
+    describe('DateTime.fromString() works', ()=>{
+      it('DateTime.fromString("1976-11-18T15:23:30.123456789")', ()=>{ equal(`${DateTime.fromString("1976-11-18T15:23:30.123456789")}`, '1976-11-18T15:23:30.123456789'); });
+      it('DateTime.fromString("1976-11-18T15:23:30.123456")', ()=>{ equal(`${DateTime.fromString("1976-11-18T15:23:30.123456")}`, '1976-11-18T15:23:30.123456'); });
+      it('DateTime.fromString("1976-11-18T15:23:30.123")', ()=>{ equal(`${DateTime.fromString("1976-11-18T15:23:30.123")}`, '1976-11-18T15:23:30.123'); });
+      it('DateTime.fromString("1976-11-18T15:23:30")', ()=>{ equal(`${DateTime.fromString("1976-11-18T15:23:30")}`, '1976-11-18T15:23:30'); });
+      it('DateTime.fromString("1976-11-18T15:23")', ()=>{ equal(`${DateTime.fromString("1976-11-18T15:23")}`, '1976-11-18T15:23:00'); });
     });
   });
 });
 
-if (import.meta.url.indexOf(process.argv[1]) === 7) report(reporter);
+import { normalize } from 'path';
+if (normalize(import.meta.url.slice(8)) === normalize(process.argv[1])) report(reporter);

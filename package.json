@@ -7,7 +7,7 @@
   "scripts": {
     "test": "./test/all.mjs",
     "prepublishOnly": "npm run build",
-    "build": "rollup -c rollup.config.js && rollup lib/local.mjs --name temporal/local --format=umd -m -o local.js"
+    "build": "rollup -c rollup.config.js"
   },
   "repository": {
     "type": "git",

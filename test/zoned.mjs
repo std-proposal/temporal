@@ -30,12 +30,11 @@ describe('ZonedDateTime', ()=>{
       it('ZonedDateTime.prototype has dayOfYear', ()=>{ assert('dayOfYear' in ZonedDateTime.prototype); });
       it('ZonedDateTime.prototype has weekOfYear', ()=>{ assert('weekOfYear' in ZonedDateTime.prototype); });
       it('ZonedDateTime.prototype.with is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.with, 'function'); });
-      it('ZonedDateTime.prototype.getOffsetDateTime is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getOffsetDateTime, 'function'); });
-      it('ZonedDateTime.prototype.getCivilDateTime is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilDateTime, 'function'); });
-      it('ZonedDateTime.prototype.getCivilDate is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilDate, 'function'); });
-      it('ZonedDateTime.prototype.getCivilTime is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilTime, 'function'); });
-      it('ZonedDateTime.prototype.getCivilYearMonth is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilYearMonth, 'function'); });
-      it('ZonedDateTime.prototype.getCivilMonthDay is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getCivilMonthDay, 'function'); });
+      it('ZonedDateTime.prototype.getDateTime is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getDateTime, 'function'); });
+      it('ZonedDateTime.prototype.getDate is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getDate, 'function'); });
+      it('ZonedDateTime.prototype.getTime is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getTime, 'function'); });
+      it('ZonedDateTime.prototype.getYearMonth is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getYearMonth, 'function'); });
+      it('ZonedDateTime.prototype.getMonthDay is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.getMonthDay, 'function'); });
       it('ZonedDateTime.prototype.toString is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.toString, 'function'); });
       it('ZonedDateTime.prototype.toJSON is a Function', ()=>{ equal(typeof ZonedDateTime.prototype.toJSON, 'function'); });
     });
@@ -77,19 +76,21 @@ describe('ZonedDateTime', ()=>{
     it('offsetdatetime.with({ nanosecond: 5 } works', ()=>{ equal(`${offsetdatetime.with({ nanosecond: 5 })}`, '1976-11-18T15:23:30.123456005+01:00[Europe/Vienna]'); });
     it('offsetdatetime.with({ month: 5, second: 15 } works', ()=>{ equal(`${offsetdatetime.with({ month: 5, second: 15 })}`, '1976-05-18T15:23:15.123456789+01:00[Europe/Vienna]'); });
   });
-  describe('ZonedDateTime.getCivil{Date,DateTime,Time} works', () => {
+  describe('ZonedDateTime.get{Date,DateTime,Time} works', () => {
     const offsetdatetime = new ZonedDateTime(Instant.fromString('1976-11-18T14:23:30.123456789Z'), 'Europe/Vienna');
-    it('offsetdatetime.getCivilDateTime()', ()=>{ equal(`${offsetdatetime.getCivilDateTime()}`, '1976-11-18T15:23:30.123456789'); })
-    it('offsetdatetime.getCivilDate()', ()=>{ equal(`${offsetdatetime.getCivilDate()}`, '1976-11-18'); })
-    it('offsetdatetime.getCivilTime()', ()=>{ equal(`${offsetdatetime.getCivilTime()}`, '15:23:30.123456789'); })
+    it('offsetdatetime.getDateTime()', ()=>{ equal(`${offsetdatetime.getDateTime()}`, '1976-11-18T15:23:30.123456789'); })
+    it('offsetdatetime.getDate()', ()=>{ equal(`${offsetdatetime.getDate()}`, '1976-11-18'); })
+    it('offsetdatetime.getTime()', ()=>{ equal(`${offsetdatetime.getTime()}`, '15:23:30.123456789'); })
   })
   describe('ZonedDateTime.fromString() works', ()=>{
     it('ZonedDateTime.fromString("1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]'); });
-    it('ZonedDateTime.fromString("1976-11-18T15:23:30.123456+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123456+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123456000+01:00[Europe/Vienna]'); });
-    it('ZonedDateTime.fromString("1976-11-18T15:23:30.123+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123000000+01:00[Europe/Vienna]'); });
-    it('ZonedDateTime.fromString("1976-11-18T15:23:30+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.000000000+01:00[Europe/Vienna]'); });
-    it('ZonedDateTime.fromString("1976-11-18T15:23+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:00.000000000+01:00[Europe/Vienna]'); });
+    it('ZonedDateTime.fromString("1976-11-18T15:23:30.123456+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123456+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123456+01:00[Europe/Vienna]'); });
+    it('ZonedDateTime.fromString("1976-11-18T15:23:30.123+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123+01:00[Europe/Vienna]'); });
+    it('ZonedDateTime.fromString("1976-11-18T15:23:30+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30+01:00[Europe/Vienna]'); });
+    it('ZonedDateTime.fromString("1976-11-18T15:23+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:00+01:00[Europe/Vienna]'); });
   });
 });
 
-if (import.meta.url.indexOf(process.argv[1]) === 7) report(reporter);
+
+import { normalize } from 'path';
+if (normalize(import.meta.url.slice(8)) === normalize(process.argv[1])) report(reporter);

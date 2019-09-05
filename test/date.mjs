@@ -9,34 +9,34 @@ const { reporter } = Pretty;
 import Assert from 'assert';
 const { ok: assert, equal } = Assert;
 
-import { CivilDate } from '../lib/date.mjs';
+import { Date } from '../lib/date.mjs';
 
-describe('CivilDate', ()=>{
+describe('Date', ()=>{
   describe('Structure', ()=>{
-    it('CivilDate is a Function', ()=>{ equal(typeof CivilDate, 'function'); });
-    it('CivilDate has a prototype', ()=>{ assert(CivilDate.prototype); equal(typeof CivilDate.prototype, 'object'); });
-    describe('CivilDate.prototype', ()=>{
-      it('CivilDate.prototype has year', ()=>{ assert('year' in CivilDate.prototype); });
-      it('CivilDate.prototype has month', ()=>{ assert('month' in CivilDate.prototype); });
-      it('CivilDate.prototype has day', ()=>{ assert('day' in CivilDate.prototype); });
-      it('CivilDate.prototype has dayOfWeek', ()=>{ assert('dayOfWeek' in CivilDate.prototype); });
-      it('CivilDate.prototype has dayOfYear', ()=>{ assert('dayOfYear' in CivilDate.prototype); });
-      it('CivilDate.prototype has weekOfYear', ()=>{ assert('weekOfYear' in CivilDate.prototype); });
-      it('CivilDate.prototype.with is a Function', ()=>{ equal(typeof CivilDate.prototype.with, 'function'); });
-      it('CivilDate.prototype.plus is a Function', ()=>{ equal(typeof CivilDate.prototype.plus, 'function'); });
-      it('CivilDate.prototype.minus is a Function', ()=>{ equal(typeof CivilDate.prototype.minus, 'function'); });
-      it('CivilDate.prototype.difference is a Function', ()=>{ equal(typeof CivilDate.prototype.difference, 'function'); });
-      it('CivilDate.prototype.withTime is a Function', ()=>{ equal(typeof CivilDate.prototype.withTime, 'function'); });
-      it('CivilDate.prototype.getCivilYearMonth is a Function', ()=>{ equal(typeof CivilDate.prototype.getCivilYearMonth, 'function'); });
-      it('CivilDate.prototype.getCivilMonthDay is a Function', ()=>{ equal(typeof CivilDate.prototype.getCivilMonthDay, 'function'); });
-      it('CivilDate.prototype.toString is a Function', ()=>{ equal(typeof CivilDate.prototype.toString, 'function'); });
-      it('CivilDate.prototype.toJSON is a Function', ()=>{ equal(typeof CivilDate.prototype.toJSON, 'function'); });
+    it('Date is a Function', ()=>{ equal(typeof Date, 'function'); });
+    it('Date has a prototype', ()=>{ assert(Date.prototype); equal(typeof Date.prototype, 'object'); });
+    describe('Date.prototype', ()=>{
+      it('Date.prototype has year', ()=>{ assert('year' in Date.prototype); });
+      it('Date.prototype has month', ()=>{ assert('month' in Date.prototype); });
+      it('Date.prototype has day', ()=>{ assert('day' in Date.prototype); });
+      it('Date.prototype has dayOfWeek', ()=>{ assert('dayOfWeek' in Date.prototype); });
+      it('Date.prototype has dayOfYear', ()=>{ assert('dayOfYear' in Date.prototype); });
+      it('Date.prototype has weekOfYear', ()=>{ assert('weekOfYear' in Date.prototype); });
+      it('Date.prototype.with is a Function', ()=>{ equal(typeof Date.prototype.with, 'function'); });
+      it('Date.prototype.plus is a Function', ()=>{ equal(typeof Date.prototype.plus, 'function'); });
+      it('Date.prototype.minus is a Function', ()=>{ equal(typeof Date.prototype.minus, 'function'); });
+      it('Date.prototype.difference is a Function', ()=>{ equal(typeof Date.prototype.difference, 'function'); });
+      it('Date.prototype.withTime is a Function', ()=>{ equal(typeof Date.prototype.withTime, 'function'); });
+      it('Date.prototype.getYearMonth is a Function', ()=>{ equal(typeof Date.prototype.getYearMonth, 'function'); });
+      it('Date.prototype.getMonthDay is a Function', ()=>{ equal(typeof Date.prototype.getMonthDay, 'function'); });
+      it('Date.prototype.toString is a Function', ()=>{ equal(typeof Date.prototype.toString, 'function'); });
+      it('Date.prototype.toJSON is a Function', ()=>{ equal(typeof Date.prototype.toJSON, 'function'); });
     });
-    it('CivilDate.fromString is a Function', ()=>{ equal(typeof CivilDate.fromString, 'function'); });
+    it('Date.fromString is a Function', ()=>{ equal(typeof Date.fromString, 'function'); });
   });
   describe('Construction', ()=>{
     let date;
-    it('date can be constructed', ()=>{ date = new CivilDate(1976, 11, 18); assert(date); equal(typeof date, 'object'); });
+    it('date can be constructed', ()=>{ date = new Date(1976, 11, 18); assert(date); equal(typeof date, 'object'); });
     it('date.year is 1976', ()=>equal(date.year, 1976));
     it('date.month is 11', ()=>equal(date.month, 11));
     it('date.day is 18', ()=>equal(date.day, 18));
@@ -46,7 +46,7 @@ describe('CivilDate', ()=>{
     it('`${date}` is 1976-11-18', ()=>equal(`${date}`, '1976-11-18'));
   });
   describe('.with manipulation', ()=>{
-    const original = new CivilDate(1976, 11, 18);
+    const original = new Date(1976, 11, 18);
     it('date.with({ year: 2019 } works', ()=>{
       const date = original.with({ year: 2019 });
       equal(`${date}`, '2019-11-18');
@@ -61,9 +61,10 @@ describe('CivilDate', ()=>{
     });
   });
   describe('date.difference() works', ()=>{
-    const date = new CivilDate(1976, 11, 18);
+    const date = new Date(1976, 11, 18);
     it('date.difference({ year: 1976, month: 10, day: 5 })', ()=>{
       const duration = date.difference({ year: 1976, month: 10, day: 5 });
+
       equal(duration.years, 0);
       equal(duration.months, 1);
       equal(duration.days, 13);
@@ -88,54 +89,55 @@ describe('CivilDate', ()=>{
     });
   });
   describe('date.plus() works', ()=>{
-    const date = new CivilDate(1976, 11, 18);
+    let date = new Date(1976, 11, 18);
     it('date.plus({ years: 43 })', ()=>{ equal(`${date.plus({ years: 43 })}`, '2019-11-18'); });
     it('date.plus({ months: 3 })', ()=>{ equal(`${date.plus({ months: 3 })}`, '1977-02-18'); });
     it('date.plus({ days: 20 })', ()=>{ equal(`${date.plus({ days: 20 })}`, '1976-12-08'); });
+    it('new Date(2019, 1, 31).plus({ months: 1 })', ()=>{ equal(`${new Date(2019, 1, 31).plus({ months: 1 })}`, '2019-02-28'); });
   });
   describe('date.minus() works', ()=>{
-    const date = new CivilDate(1976, 11, 18);
+    const date = new Date(1976, 11, 18);
     it('date.minus({ years: 21 })', ()=>{ equal(`${date.minus({ years: 21 })}`, '1955-11-18'); });
     it('date.minus({ months: 13 })', ()=>{ equal(`${date.minus({ months: 13 })}`, '1975-10-18'); });
     it('date.minus({ days: 20 })', ()=>{ equal(`${date.minus({ days: 20 })}`, '1976-10-29'); });
   });
   describe('date.toString() works', ()=>{
-    it('new CivilDate(1976, 11, 18).toString()', ()=>{ equal(new CivilDate(1976, 11, 18).toString(), '1976-11-18'); });
-    it('new CivilDate(1914, 2, 23).toString()', ()=>{ equal(new CivilDate(1914, 2, 23).toString(), '1914-02-23'); });
+    it('new Date(1976, 11, 18).toString()', ()=>{ equal(new Date(1976, 11, 18).toString(), '1976-11-18'); });
+    it('new Date(1914, 2, 23).toString()', ()=>{ equal(new Date(1914, 2, 23).toString(), '1914-02-23'); });
   });
-  describe('CivilDate.fromString() works', ()=>{
-    it('CivilDate.fromString("1976-11-18")', ()=>{
-      const date = CivilDate.fromString("1976-11-18");
+  describe('Date.fromString() works', ()=>{
+    it('Date.fromString("1976-11-18")', ()=>{
+      const date = Date.fromString("1976-11-18");
       equal(date.year, 1976);
       equal(date.month, 11);
       equal(date.day, 18);
     });
-    it('CivilDate.fromString("2019-06-30")', ()=>{
-      const date = CivilDate.fromString("2019-06-30");
+    it('Date.fromString("2019-06-30")', ()=>{
+      const date = Date.fromString("2019-06-30");
       equal(date.year, 2019);
       equal(date.month, 6);
       equal(date.day, 30);
     });
-    it('CivilDate.fromString("0050-06-30")', ()=>{
-      const date = CivilDate.fromString("0050-06-30");
+    it('Date.fromString("+000050-06-30")', ()=>{
+      const date = Date.fromString("+000050-06-30");
       equal(date.year, 50);
       equal(date.month, 6);
       equal(date.day, 30);
     });
-    it('CivilDate.fromString("10583-06-30")', ()=>{
-      const date = CivilDate.fromString("10583-06-30");
+    it('Date.fromString("+010583-06-30")', ()=>{
+      const date = Date.fromString("+010583-06-30");
       equal(date.year, 10583);
       equal(date.month, 6);
       equal(date.day, 30);
     });
-    it('CivilDate.fromString("+10583-06-30")', ()=>{
-      const date = CivilDate.fromString("+10583-06-30");
-      equal(date.year, 10583);
+    it('Date.fromString("-010583-06-30")', ()=>{
+      const date = Date.fromString("-010583-06-30");
+      equal(date.year, -10583);
       equal(date.month, 6);
       equal(date.day, 30);
     });
-    it('CivilDate.fromString("-0333-06-30")', ()=>{
-      const date = CivilDate.fromString("-0333-06-30");
+    it('Date.fromString("-000333-06-30")', ()=>{
+      const date = Date.fromString("-000333-06-30");
       equal(date.year, -333);
       equal(date.month, 6);
       equal(date.day, 30);
@@ -143,4 +145,5 @@ describe('CivilDate', ()=>{
   });
 });
 
-if (import.meta.url.indexOf(process.argv[1]) === 7) report(reporter);
+import { normalize } from 'path';
+if (normalize(import.meta.url.slice(8)) === normalize(process.argv[1])) report(reporter);
