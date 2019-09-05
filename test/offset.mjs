@@ -87,6 +87,20 @@ describe('OffsetDateTime', ()=>{
     it('offsetdatetime.plus({ hours: 20 })', ()=>{ equal(`${offsetdatetime.plus({ hours: 20 })}`, '1976-11-19T11:23:30.123456789+01:00'); });
     it('offsetdatetime.plus({ minutes: 40 })', ()=>{ equal(`${offsetdatetime.plus({ minutes: 40 })}`, '1976-11-18T16:03:30.123456789+01:00'); });
     it('offsetdatetime.plus({ seconds: 40 })', ()=>{ equal(`${offsetdatetime.plus({ seconds: 40 })}`, '1976-11-18T15:24:10.123456789+01:00'); });
+
+    const epoch = new OffsetDateTime(Instant.fromString('1970-01-01T00:00:00.000000000Z'), '+00:00');
+
+    it('epoch.plus({ minutes: Number.MAX_SAFE_INTEGER / 1E5 / 60 })', ()=>{ equal(`${epoch.plus({ minutes: Number.MAX_SAFE_INTEGER / 1E5 / 60 })}`, '4824-04-07T21:55:00.000000000+00:00'); });
+    it('epoch.plus({ seconds: Number.MAX_SAFE_INTEGER / 1E5 })', ()=>{ equal(`${epoch.plus({ seconds: Number.MAX_SAFE_INTEGER / 1E5 })}`, '4824-04-07T21:55:47.000000000+00:00'); });
+    it('epoch.plus({ milliseconds: Number.MAX_SAFE_INTEGER / 1E2 })', ()=>{ equal(`${epoch.plus({ milliseconds: Number.MAX_SAFE_INTEGER / 1E2 })}`, '4824-04-07T21:55:47.409000000+00:00'); });
+
+    it('epoch.plus({ seconds: Number.MAX_SAFE_INTEGER / 1E6 })', ()=>{ equal(`${epoch.plus({ seconds: Number.MAX_SAFE_INTEGER / 1E6 })}`, '2255-06-05T23:47:34.000000000+00:00'); });
+    it('epoch.plus({ milliseconds: Number.MAX_SAFE_INTEGER / 1E3 })', ()=>{ equal(`${epoch.plus({ milliseconds: Number.MAX_SAFE_INTEGER / 1E3 })}`, '2255-06-05T23:47:34.740000000+00:00'); });
+    it('epoch.plus({ microseconds: Number.MAX_SAFE_INTEGER })', ()=>{ equal(`${epoch.plus({ microseconds: Number.MAX_SAFE_INTEGER })}`, '2255-06-05T23:47:34.740991000+00:00'); });
+
+    it('epoch.plus({ milliseconds: Number.MAX_SAFE_INTEGER / 1E6 })', ()=>{ equal(`${epoch.plus({ milliseconds: Number.MAX_SAFE_INTEGER / 1E6 })}`, '1970-04-15T05:59:59.254000000+00:00'); });
+    it('epoch.plus({ microseconds: Number.MAX_SAFE_INTEGER / 1E3 })', ()=>{ equal(`${epoch.plus({ microseconds: Number.MAX_SAFE_INTEGER / 1E3 })}`, '1970-04-15T05:59:59.254740000+00:00'); });
+    it('epoch.plus({ nanoseconds: Number.MAX_SAFE_INTEGER })', ()=>{ equal(`${epoch.plus({ nanoseconds: Number.MAX_SAFE_INTEGER })}`, '1970-04-15T05:59:59.254740991+00:00'); });
   });
   describe('offsetdatetime.minus() works', ()=>{
     const offsetdatetime = new OffsetDateTime(Instant.fromString('1976-11-18T14:23:30.123456789Z'), '+01:00');

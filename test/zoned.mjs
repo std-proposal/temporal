@@ -77,6 +77,12 @@ describe('ZonedDateTime', ()=>{
     it('offsetdatetime.with({ nanosecond: 5 } works', ()=>{ equal(`${offsetdatetime.with({ nanosecond: 5 })}`, '1976-11-18T15:23:30.123456005+01:00[Europe/Vienna]'); });
     it('offsetdatetime.with({ month: 5, second: 15 } works', ()=>{ equal(`${offsetdatetime.with({ month: 5, second: 15 })}`, '1976-05-18T15:23:15.123456789+01:00[Europe/Vienna]'); });
   });
+  describe('ZonedDateTime.getCivil{Date,DateTime,Time} works', () => {
+    const offsetdatetime = new ZonedDateTime(Instant.fromString('1976-11-18T14:23:30.123456789Z'), 'Europe/Vienna');
+    it('offsetdatetime.getCivilDateTime()', ()=>{ equal(`${offsetdatetime.getCivilDateTime()}`, '1976-11-18T15:23:30.123456789'); })
+    it('offsetdatetime.getCivilDate()', ()=>{ equal(`${offsetdatetime.getCivilDate()}`, '1976-11-18'); })
+    it('offsetdatetime.getCivilTime()', ()=>{ equal(`${offsetdatetime.getCivilTime()}`, '15:23:30.123456789'); })
+  })
   describe('ZonedDateTime.fromString() works', ()=>{
     it('ZonedDateTime.fromString("1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123456789+01:00[Europe/Vienna]'); });
     it('ZonedDateTime.fromString("1976-11-18T15:23:30.123456+01:00[Europe/Vienna]")', ()=>{ equal(`${ZonedDateTime.fromString("1976-11-18T15:23:30.123456+01:00[Europe/Vienna]")}`, '1976-11-18T15:23:30.123456000+01:00[Europe/Vienna]'); });
