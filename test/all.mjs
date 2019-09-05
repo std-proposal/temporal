@@ -1,4 +1,4 @@
-#! /usr/bin/env node --experimental-modules
+#! /usr/bin/env -S node --experimental-modules
 
 import Demitasse from '@pipobscure/demitasse';
 import Pretty from '@pipobscure/demitasse-pretty';
