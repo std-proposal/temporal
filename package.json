@@ -6,6 +6,7 @@
   "directories": {},
   "scripts": {
     "test": "./test/all.mjs",
+    "prettier": "prettier --write lib/*.mjs test/*.mjs",
     "prepublishOnly": "npm run build",
     "build": "rollup -c rollup.config.js"
   },
@@ -23,8 +24,31 @@
   "devDependencies": {
     "@pipobscure/demitasse": "^1.0.10",
     "@pipobscure/demitasse-pretty": "^1.0.10",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "prettier": "^1.18.2",
     "rollup": "^1.7.0",
     "rollup-plugin-license": "^0.8.1",
     "rollup-plugin-node-resolve": "^4.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run build"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,js,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "arrowParens": "always"
   }
 }

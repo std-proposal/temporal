@@ -12,6 +12,8 @@ import * as date from './date.mjs';
 import * as time from './time.mjs';
 import * as datetime from './datetime.mjs';
 
-Promise.resolve().then(()=>{
-  return Demitasse.report(Pretty.reporter);
-}).catch((e)=>console.error(e));
+Promise.resolve()
+  .then(() => {
+    return Demitasse.report(Pretty.reporter);
+  })
+  .catch((e) => console.error(e));
