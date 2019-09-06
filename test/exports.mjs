@@ -9,10 +9,10 @@ const { reporter } = Pretty;
 import Assert from 'assert';
 const { ok: assert, equal } = Assert;
 
-import * as temporal from '../lib/temporal.mjs';
+import Temporal from '@std-proposal/temporal';
 
 describe('Exports', () => {
-  const named = Object.keys(temporal);
+  const named = Object.keys(Temporal);
   it('should be 12 things', () => {
     equal(named.length, 12);
   });
@@ -54,14 +54,14 @@ describe('Exports', () => {
   });
   describe('Local', () => {
     const expected = ['instant', 'timeZone', 'zonedDateTime', 'dateTime', 'date', 'time', 'dayMonth', 'monthYear'];
-    const named = Object.keys(temporal.Local);
+    const named = Object.keys(Temporal.Local);
     it(`should be ${expected.length} things`, () => {
       equal(named.length, expected.length);
     });
     expected.forEach((prop) => {
       it(`should contain '${prop}'`, () => {
         assert(named.includes(prop));
-        assert('function' === typeof temporal.Local[prop], `Temporal.Local.${prop} is a function`);
+        assert('function' === typeof Temporal.Local[prop], `Temporal.Local.${prop} is a function`);
       });
     });
   });

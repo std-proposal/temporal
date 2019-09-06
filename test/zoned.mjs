@@ -9,8 +9,8 @@ const { reporter } = Pretty;
 import Assert from 'assert';
 const { ok: assert, equal } = Assert;
 
-import { Instant } from '../lib/instant.mjs';
-import { ZonedDateTime } from '../lib/zoned.mjs';
+import Temporal from '@std-proposal/temporal';
+const { Instant, ZonedDateTime } = Temporal;
 
 describe('ZonedDateTime', () => {
   describe('Structure', () => {

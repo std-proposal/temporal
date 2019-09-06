@@ -1,5 +1,2 @@
 lib/
-docs/
-test/
-test262/
 rollup.config.js

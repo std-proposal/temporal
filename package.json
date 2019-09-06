@@ -1,11 +1,13 @@
 {
   "name": "@std-proposal/temporal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "TC39 Proposal: Temporal",
   "main": "index.js",
   "directories": {},
   "scripts": {
-    "test": "node --experimental-modules test/all.mjs",
+    "test:source": "node --no-warnings --experimental-modules --loader ./test/resolve.source.mjs ./test/all.mjs",
+    "test:compiled": "node --no-warnings --experimental-modules --loader ./test/resolve.compiled.mjs ./test/all.mjs",
+    "test": "npm run test:compiled",
     "prettier": "prettier --write lib/*.mjs test/*.mjs package.json",
     "prepublishOnly": "npm run build",
     "build": "rollup -c rollup.config.js"
@@ -29,7 +31,7 @@
     "lint-staged": "^9.2.5",
     "prettier": "^1.18.2",
     "rollup": "^1.7.0",
-    "rollup-plugin-license": "^0.8.1"
+    "rollup-plugin-license": "^0.12.1"
   },
   "husky": {
     "hooks": {

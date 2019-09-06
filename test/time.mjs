@@ -9,7 +9,8 @@ const { reporter } = Pretty;
 import Assert from 'assert';
 const { ok: assert, equal } = Assert;
 
-import { Time } from '../lib/time.mjs';
+import Temporal from '@std-proposal/temporal';
+const { Time } = Temporal;
 
 describe('Time', () => {
   describe('Structure', () => {
