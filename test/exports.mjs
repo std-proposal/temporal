@@ -13,8 +13,8 @@ import * as temporal from '../lib/temporal.mjs';
 
 describe('Exports', () => {
   const named = Object.keys(temporal);
-  it('should be 8 things', () => {
-    equal(named.length, 13);
+  it('should be 12 things', () => {
+    equal(named.length, 12);
   });
   it('should contain `Instant`', () => {
     assert(named.includes('Instant'));
@@ -49,11 +49,21 @@ describe('Exports', () => {
   it('should contain `LATER`', () => {
     assert(named.includes('LATER'));
   });
-  it('should contain `here`', () => {
-    assert(named.includes('here'));
+  it('should contain `Local`', () => {
+    assert(named.includes('Local'));
   });
-  it('should contain `now`', () => {
-    assert(named.includes('now'));
+  describe('Local', () => {
+    const expected = ['instant', 'timeZone', 'zonedDateTime', 'dateTime', 'date', 'time', 'dayMonth', 'monthYear'];
+    const named = Object.keys(temporal.Local);
+    it(`should be ${expected.length} things`, () => {
+      equal(named.length, expected.length);
+    });
+    expected.forEach((prop) => {
+      it(`should contain '${prop}'`, () => {
+        assert(named.includes(prop));
+        assert('function' === typeof temporal.Local[prop], `Temporal.Local.${prop} is a function`);
+      });
+    });
   });
 });
 

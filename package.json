@@ -5,8 +5,8 @@
   "main": "index.js",
   "directories": {},
   "scripts": {
-    "test": "./test/all.mjs",
-    "prettier": "prettier --write lib/*.mjs test/*.mjs",
+    "test": "node --experimental-modules test/all.mjs",
+    "prettier": "prettier --write lib/*.mjs test/*.mjs package.json",
     "prepublishOnly": "npm run build",
     "build": "rollup -c rollup.config.js"
   },
@@ -24,12 +24,12 @@
   "devDependencies": {
     "@pipobscure/demitasse": "^1.0.10",
     "@pipobscure/demitasse-pretty": "^1.0.10",
+    "@pipobscure/demitasse-run": "^1.0.10",
     "husky": "^3.0.5",
     "lint-staged": "^9.2.5",
     "prettier": "^1.18.2",
     "rollup": "^1.7.0",
-    "rollup-plugin-license": "^0.8.1",
-    "rollup-plugin-node-resolve": "^4.0.1"
+    "rollup-plugin-license": "^0.8.1"
   },
   "husky": {
     "hooks": {
