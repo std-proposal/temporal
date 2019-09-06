@@ -1,5 +1,10 @@
 #! /usr/bin/env -S node --experimental-modules
 
+/*
+** Copyright (C) 2018-2019 Bloomberg LP. All rights reserved.
+** This code is governed by the license found in the LICENSE file.
+*/
+
 import Demitasse from '@pipobscure/demitasse';
 import Pretty from '@pipobscure/demitasse-pretty';
 

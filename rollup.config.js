@@ -1,3 +1,8 @@
+/*
+ ** Copyright (C) 2018-2019 Bloomberg LP. All rights reserved.
+ ** This code is governed by the license found in the LICENSE file.
+ */
+
 import license from 'rollup-plugin-license';
 import { join } from 'path';
 
@@ -6,8 +11,10 @@ export default {
   plugins: [
     license({
       banner: {
-        file: join(__dirname, 'LICENSE'),
-        encoding: 'utf-8'
+        content: {
+          file: join(__dirname, 'LICENSE'),
+          encoding: 'utf-8'
+        }
       }
     })
   ],
