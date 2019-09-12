@@ -19,16 +19,13 @@ import Temporal from '@std-proposal/temporal';
 describe('Exports', () => {
   const named = Object.keys(Temporal);
   it('should be 12 things', () => {
-    equal(named.length, 12);
+    equal(named.length, 11);
   });
-  it('should contain `Instant`', () => {
-    assert(named.includes('Instant'));
+  it('should contain `Absolute`', () => {
+    assert(named.includes('Absolute'));
   });
   it('should contain `TimeZone`', () => {
     assert(named.includes('TimeZone'));
-  });
-  it('should contain `ZonedDateTime`', () => {
-    assert(named.includes('ZonedDateTime'));
   });
   it('should contain `Date`', () => {
     assert(named.includes('Date'));
@@ -58,7 +55,7 @@ describe('Exports', () => {
     assert(named.includes('Local'));
   });
   describe('Local', () => {
-    const expected = ['instant', 'timeZone', 'zonedDateTime', 'dateTime', 'date', 'time', 'dayMonth', 'monthYear'];
+    const expected = ['absolute', 'timeZone', 'dateTime', 'date', 'time', 'dayMonth', 'monthYear'];
     const named = Object.keys(Temporal.Local);
     it(`should be ${expected.length} things`, () => {
       equal(named.length, expected.length);
