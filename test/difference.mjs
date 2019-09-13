@@ -19,7 +19,7 @@ import Temporal from '@std-proposal/temporal';
 describe('Date.difference', ()=>{
     const today = Temporal.Local.date();
     const other = new Temporal.Date(1976, 11, 18);
-    const difference = 'P42Y9M25D'; // today.difference(other);
+    const difference = today.difference(other);
     it(`(${today}).minus('${difference}') == ${other}`, ()=>equal(`${today.minus(difference)}`, `${other}`));
     it(`(${other}).plus('${difference}') == ${today}`, ()=>equal(`${other.plus(difference)}`, `${today}`));
     
@@ -40,6 +40,7 @@ describe('Time.difference', ()=>{
     const difference = one.difference(two);
     it(`(${two}).minus('${difference}') == ${one}`, ()=>equal(`${two.minus(difference)}`, `${one}`));
     it(`(${one}).plus('${difference}') == ${two}`, ()=>equal(`${one.plus(difference)}`, `${two}`));
+    
     it(`(${two}).minus('${difference}').plus('${difference}') == ${two}`, ()=>equal(`${two.minus(difference).plus(difference)}`, `${two}`));
     it(`(${two}).plus('${difference}').minus('${difference}') == ${two}`, ()=>equal(`${two.plus(difference).minus(difference)}`, `${two}`));
     it(`(${two}).minus('${'PT96M'}').plus('${'PT96M'}') == ${two}`, ()=>equal(`${two.minus('PT96M').plus('PT96M')}`, `${two}`));
