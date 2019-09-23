@@ -159,7 +159,8 @@ describe('Date', () => {
       equal(`${date.minus({ months: 13 })}`, '1975-10-18');
     });
     it('date.minus({ days: 20 })', () => {
-      equal(`${date.minus({ days: 20 })}`, '1976-10-29');
+      equal(`${date.minus('P20D').plus('P20D')}`, `${date}`);
+      equal(`${date.minus('P20D')}`, '1976-10-29');
     });
   });
   describe('date.toString() works', () => {
