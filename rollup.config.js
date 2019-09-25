@@ -4,6 +4,7 @@
  */
 
 import license from 'rollup-plugin-license';
+import babel from 'rollup-plugin-babel';
 import { join } from 'path';
 
 export default {
@@ -16,6 +17,10 @@ export default {
           encoding: 'utf-8'
         }
       }
+    }),
+    babel({
+      exclude: 'node_modules/**',
+      plugins: ['@babel/plugin-syntax-bigint', '@babel/plugin-proposal-class-properties']
     })
   ],
   output: {

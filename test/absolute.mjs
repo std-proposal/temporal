@@ -39,53 +39,11 @@ describe('Absolute', () => {
       it('Absolute.prototype has getEpochNanoseconds', () => {
         assert('getEpochNanoseconds' in Absolute.prototype);
       });
-      it('Absolute.prototype.withZone is a Function', () => {
-        equal(typeof Absolute.prototype.withZone, 'function');
-      });
       it('Absolute.prototype.toString is a Function', () => {
         equal(typeof Absolute.prototype.toString, 'function');
       });
       it('Absolute.prototype.toJSON is a Function', () => {
         equal(typeof Absolute.prototype.toJSON, 'function');
-      });
-      it('Absolute.prototype has year', () => {
-        assert('year' in Absolute.prototype);
-      });
-      it('Absolute.prototype has month', () => {
-        assert('month' in Absolute.prototype);
-      });
-      it('Absolute.prototype has day', () => {
-        assert('day' in Absolute.prototype);
-      });
-      it('Absolute.prototype has hour', () => {
-        assert('hour' in Absolute.prototype);
-      });
-      it('Absolute.prototype has minute', () => {
-        assert('minute' in Absolute.prototype);
-      });
-      it('Absolute.prototype has second', () => {
-        assert('second' in Absolute.prototype);
-      });
-      it('Absolute.prototype has millisecond', () => {
-        assert('millisecond' in Absolute.prototype);
-      });
-      it('Absolute.prototype has microsecond', () => {
-        assert('microsecond' in Absolute.prototype);
-      });
-      it('Absolute.prototype has nanosecond', () => {
-        assert('nanosecond' in Absolute.prototype);
-      });
-      it('Absolute.prototype has dayOfWeek', () => {
-        assert('dayOfWeek' in Absolute.prototype);
-      });
-      it('Absolute.prototype has dayOfYear', () => {
-        assert('dayOfYear' in Absolute.prototype);
-      });
-      it('Absolute.prototype has weekOfYear', () => {
-        assert('weekOfYear' in Absolute.prototype);
-      });
-      it('Absolute.prototype.with is a Function', () => {
-        equal(typeof Absolute.prototype.with, 'function');
       });
       it('Absolute.prototype.getDateTime is a Function', () => {
         equal(typeof Absolute.prototype.getDateTime, 'function');
